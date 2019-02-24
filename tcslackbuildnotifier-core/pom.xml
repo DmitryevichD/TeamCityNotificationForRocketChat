@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>tcslackbuildnotifier</artifactId>
-		<groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
+		<artifactId>rocket-notifier</artifactId>
+		<groupId>by.dm13y.teamcity.plugins.rocket-notifications</groupId>
 		<version>${currentVersion}</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>tcslackbuildnotifier-core</artifactId>
+	<artifactId>rocket-notifier-core</artifactId>
 
 	<build>
 		<defaultGoal>package</defaultGoal>

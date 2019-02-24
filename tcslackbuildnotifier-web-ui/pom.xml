@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>tcslackbuildnotifier</artifactId>
-        <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
+        <artifactId>rocket-notifier</artifactId>
+        <groupId>by.dm13y.teamcity.plugins.rocket-notifications</groupId>
         <version>${currentVersion}</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>tcslackbuildnotifier-web-ui</artifactId>
+    <artifactId>rocket-notifier-web-ui</artifactId>
 
     <build>
         <defaultGoal>package</defaultGoal>
@@ -146,15 +146,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
-            <artifactId>tcslackbuildnotifier-core</artifactId>
+            <groupId>by.dm13y.teamcity.plugins.rocket-notifications</groupId>
+            <artifactId>rocket-notifier-core</artifactId>
             <version>${currentVersion}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
-            <artifactId>tcslackbuildnotifier-core</artifactId>
+            <groupId>by.dm13y.teamcity.plugins.rocket-notifications</groupId>
+            <artifactId>rocket-notifier-core</artifactId>
             <version>${currentVersion}</version>
             <type>test-jar</type>
             <scope>test</scope>
