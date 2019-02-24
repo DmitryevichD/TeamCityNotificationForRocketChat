@@ -44,6 +44,10 @@ public interface SlackNotification {
 
     public abstract void setIconUrl(String iconUrl);
 
+    public abstract String getRocketUrl();
+
+    public abstract void setRocketUrl(String rocketUrl);
+
 	public abstract String getParameterisedUrl();
 
 	public abstract String parametersAsQueryString();
@@ -75,9 +79,9 @@ public interface SlackNotification {
 	public abstract void setErrorReason(String errorReason);
 
 	public abstract BuildState getBuildStates();
-	
+
 	public abstract void setBuildStates(BuildState states);
-	
+
 	//public abstract Integer getEventListBitMask();
 	//public abstract void setTriggerStateBitMask(Integer triggerStateBitMask);
 
@@ -100,9 +104,9 @@ public interface SlackNotification {
     public abstract void setShowElapsedBuildTime(Boolean showElapsedBuildTime);
 
     public abstract void setShowCommits(boolean showCommits);
-	
+
     public abstract void setShowCommitters(boolean showCommitters);
-	
+
 	public abstract void setShowTriggeredBy(boolean showTriggeredBy);
 
     public abstract void setMaxCommitsToDisplay(int maxCommitsToDisplay);

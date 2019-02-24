@@ -32,11 +32,11 @@ public class SlackNotificationMainSettings implements MainConfigProcessor {
         Loggers.SERVER.debug(NAME + ":: Registering");
         server.registerExtension(MainConfigProcessor.class, "slacknotifications", this);
     }
-    
+
 	public String getProxySettingsAsString(){
 		return this.slackNotificationMainConfig.getProxySettingsAsString();
 	}
-	
+
     @SuppressWarnings("unchecked")
     @Override
     public void readFrom(Element rootElement)
@@ -61,12 +61,20 @@ public class SlackNotificationMainSettings implements MainConfigProcessor {
     @Override
     public void writeTo(Element parentElement)
     /* Is passed an (probably empty) Element by TC, which is expected to be populated from the settings
-     * in memory. 
+     * in memory.
      */
     {
 
     }
-    
+
+    public SlackNotificationMainConfig getSlackNotificationMainConfig() {
+        return slackNotificationMainConfig;
+    }
+
+    public void setSlackNotificationMainConfig(SlackNotificationMainConfig slackNotificationMainConfig) {
+        this.slackNotificationMainConfig = slackNotificationMainConfig;
+    }
+
     public String getProxy(){
     	return this.slackNotificationMainConfig.getProxyConfig().getProxyHost();
     }
@@ -96,6 +104,11 @@ public class SlackNotificationMainSettings implements MainConfigProcessor {
         return this.slackNotificationMainConfig.getContent().getIconUrl();
     }
 
+    public String getRocketUrl()
+    {
+        return this.slackNotificationMainConfig.getContent().getRocketUrl();
+    }
+
     public String getBotName()
     {
         return this.slackNotificationMainConfig.getContent().getBotName();
@@ -117,7 +130,7 @@ public class SlackNotificationMainSettings implements MainConfigProcessor {
     public boolean getShowCommits(){
         return this.slackNotificationMainConfig.getContent().getShowCommits();
     }
-	
+
     public boolean getShowCommitters(){
         return this.slackNotificationMainConfig.getContent().getShowCommitters();
     }
@@ -133,7 +146,7 @@ public class SlackNotificationMainSettings implements MainConfigProcessor {
     public Boolean getSlackNotificationShowFurtherReading(){
     	return this.slackNotificationMainConfig.getSlackNotificationShowFurtherReading();
     }
-    
+
 	public void dispose() {
 		Loggers.SERVER.debug(NAME + ":dispose() called");
 	}

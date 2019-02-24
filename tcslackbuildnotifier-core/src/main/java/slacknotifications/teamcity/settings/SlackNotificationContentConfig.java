@@ -12,6 +12,7 @@ public class SlackNotificationContentConfig {
     public static final boolean DEFAULT_SHOW_TRIGGERED_BY = true;
     public static final boolean DEFAULT_SHOW_FAILURE_REASON = false;
     private String iconUrl = SlackNotificationMainConfig.DEFAULT_ICONURL;
+    private String rocketUrl;
     private String botName = SlackNotificationMainConfig.DEFAULT_BOTNAME;
     private Boolean showBuildAgent;
     private Boolean showElapsedBuildTime;
@@ -28,6 +29,14 @@ public class SlackNotificationContentConfig {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getRocketUrl() {
+        return rocketUrl;
+    }
+
+    public void setRocketUrl(String rocketUrl) {
+        this.rocketUrl = rocketUrl;
     }
 
     public String getBotName() {

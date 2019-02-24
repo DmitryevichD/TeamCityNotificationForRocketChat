@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class SlackNotificationImpl implements SlackNotification {
 
 	private static final String UTF8 = "UTF-8";
+    private static final String CHAT_MESSAGE_API = "/api/v1/chat.postMessage";
 
     private String proxyHost;
     private Integer proxyPort = 0;
@@ -48,6 +49,7 @@ public class SlackNotificationImpl implements SlackNotification {
     private String teamName;
     private String token;
     private String iconUrl;
+    private String rocketUrl;
     private String content;
     private SlackNotificationPayloadContent payload;
     private Integer resultCode;
@@ -208,7 +210,9 @@ public class SlackNotificationImpl implements SlackNotification {
     }
 
     public void postReactChat() throws IOException  {
+//        String url = this.getRocketUrl() + CHAT_MESSAGE_API;
         HttpPost httppost = new HttpPost("https://openbank-rc.cherashev.com/api/v1/chat.postMessage");
+//        HttpPost httppost = new HttpPost(url);
 
         httppost.setHeader("X-Auth-Token", this.token);
         httppost.setHeader("X-User-Id", this.teamName);
@@ -218,14 +222,11 @@ public class SlackNotificationImpl implements SlackNotification {
 
         String attachmentsParam = "";
 
-        try {
-            attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
-            String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.botName + "\", " + attachmentsParam + "}";
-            httppost.setEntity(new StringEntity(body));
-        } catch (Exception ex) {
-            int i = 10;
-        }
-        int ss = 20;
+
+        attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
+        String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.getBotName() + "\", " + attachmentsParam + "}";
+        httppost.setEntity(new StringEntity(body));
+
 
         try {
             HttpResponse response = client.execute(httppost);
@@ -524,6 +525,14 @@ public class SlackNotificationImpl implements SlackNotification {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getRocketUrl() {
+        return rocketUrl;
+    }
+
+    public void setRocketUrl(String rocketUrl) {
+        this.rocketUrl = rocketUrl;
     }
 
     public String getBotName() {

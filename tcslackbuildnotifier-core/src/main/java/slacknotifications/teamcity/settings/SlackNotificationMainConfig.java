@@ -21,6 +21,7 @@ public class SlackNotificationMainConfig implements ChangeListener {
 	private static final String TOKEN = "token";
 	private static final String DEFAULT_CHANNEL = "defaultChannel";
 	private static final String ICON_URL = "iconurl";
+	private static final String ROCKET_URL = "rocketUrl";
 	private static final String BOT_NAME = "botname";
 	private static final String SHOW_BUILD_AGENT = "showBuildAgent";
 	private static final String SHOW_COMMITS = "showCommits";
@@ -285,6 +286,7 @@ public class SlackNotificationMainConfig implements ChangeListener {
                         rootElement.setAttribute(TEAM_NAME, emptyIfNull(SlackNotificationMainConfig.this.teamName));
 						rootElement.setAttribute(TOKEN, emptyIfNull(SlackNotificationMainConfig.this.token));
 						rootElement.setAttribute(ICON_URL, emptyIfNull(SlackNotificationMainConfig.this.content.getIconUrl()));
+						rootElement.setAttribute(ROCKET_URL, emptyIfNull(SlackNotificationMainConfig.this.content.getRocketUrl()));
 						rootElement.setAttribute(BOT_NAME, emptyIfNull(SlackNotificationMainConfig.this.content.getBotName()));
                         rootElement.setAttribute(ENABLED, Boolean.toString(SlackNotificationMainConfig.this.enabled));
                         rootElement.setAttribute(TEAM_NAME, emptyIfNull(SlackNotificationMainConfig.this.teamName));
@@ -372,6 +374,10 @@ public class SlackNotificationMainConfig implements ChangeListener {
             if(slackNotificationsElement.getAttribute(ICON_URL) != null)
             {
                 content.setIconUrl(slackNotificationsElement.getAttributeValue(ICON_URL));
+            }
+            if(slackNotificationsElement.getAttribute(ROCKET_URL) != null)
+            {
+                content.setRocketUrl(slackNotificationsElement.getAttributeValue(ROCKET_URL));
             }
             if(slackNotificationsElement.getAttribute(BOT_NAME) != null)
             {

@@ -5,7 +5,7 @@
     <name>tcRocketNotifications</name>
     <display-name>Rocketchat Notifications plugin</display-name>
     <version>${version}</version>
-    <description>Trigger slack notifications POST requests from build events. Adds tabs to the Project and Build pages.</description>
+    <description>Trigger rocket chat notifications POST requests from build events. Adds tabs to the Project and Build pages.</description>
     <vendor>
       <name>D.Dmitrievich</name>
     </vendor>

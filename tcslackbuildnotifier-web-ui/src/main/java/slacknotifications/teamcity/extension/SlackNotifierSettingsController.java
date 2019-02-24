@@ -36,6 +36,7 @@ public class SlackNotifierSettingsController extends BaseController {
     private static final String ACTION_PARAMETER = "action";
     private String teamName;
     private String token;
+    private String rocketUrl;
     private String botName;
     private String iconUrl;
     private String defaultChannel;
@@ -105,6 +106,7 @@ public class SlackNotifierSettingsController extends BaseController {
     private void setRequestParams(HttpServletRequest request) {
         teamName = request.getParameter("teamName");
         token = request.getParameter("token");
+        rocketUrl = request.getParameter("rocketUrl");
         botName = request.getParameter("botName");
         iconUrl = request.getParameter("iconUrl");
         defaultChannel = request.getParameter("defaultChannel");
@@ -125,7 +127,7 @@ public class SlackNotifierSettingsController extends BaseController {
         setRequestParams(request);
         HashMap<String, Object> params = new HashMap<String, Object>();
 
-        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword);
+        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
 
         SlackNotification notification = createMockNotification(teamName, defaultChannel, botName,
                 token, iconUrl, Integer.parseInt(maxCommitsToDisplay),
@@ -150,9 +152,10 @@ public class SlackNotifierSettingsController extends BaseController {
     }
 
     private void Validate(String teamName, String token, String botName, String iconUrl, String defaultChannel
-            , String maxCommitsToDisplay, String showBuildAgent, String proxyHost, String proxyPort, String proxyUser, String proxyPassword) throws SlackConfigValidationException {
+            , String maxCommitsToDisplay, String showBuildAgent, String proxyHost, String proxyPort, String proxyUser, String proxyPassword, String rocketUrl) throws SlackConfigValidationException {
         if(teamName == null || StringUtil.isEmpty(teamName)
                 || token == null || StringUtil.isEmpty(token)
+                || rocketUrl == null || StringUtil.isEmpty(rocketUrl)
                 || botName == null || StringUtil.isEmpty(botName)
                 || iconUrl == null || StringUtil.isEmpty(iconUrl)
                 || defaultChannel == null || StringUtil.isEmpty(defaultChannel)
@@ -241,12 +244,14 @@ public class SlackNotifierSettingsController extends BaseController {
             proxyPassword = RSACipher.decryptWebRequestData(proxyPassword);
         }
 
-        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword);
+        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay,
+                showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
 
         this.config.setTeamName(teamName);
         this.config.setToken(token);
         this.config.getContent().setBotName(botName);
         this.config.getContent().setIconUrl(iconUrl);
+        this.config.getContent().setRocketUrl(rocketUrl);
         this.config.setDefaultChannel(defaultChannel);
         this.config.getContent().setMaxCommitsToDisplay(Integer.parseInt(maxCommitsToDisplay));
         this.config.getContent().setShowBuildAgent(Boolean.parseBoolean(showBuildAgent));

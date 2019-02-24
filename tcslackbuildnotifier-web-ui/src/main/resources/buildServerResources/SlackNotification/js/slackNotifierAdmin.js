@@ -5,6 +5,7 @@ var SlackNotifierAdmin = {
             var teamName = document.forms["slackNotifierAdminForm"]["teamName"].value;
             var token = document.forms["slackNotifierAdminForm"]["token"].value;
             var iconUrl = document.forms["slackNotifierAdminForm"]["iconUrl"].value;
+            var rocketUrl = document.forms["slackNotifierAdminForm"]["rocketUrl"].value;
             var botName = document.forms["slackNotifierAdminForm"]["botName"].value;
             var maxCommitsToDisplay = document.forms["slackNotifierAdminForm"]["maxCommitsToDisplay"].value;
             var showCommits = document.forms["slackNotifierAdminForm"]["showCommits"].checked;
@@ -22,6 +23,9 @@ var SlackNotifierAdmin = {
             }
             if(!iconUrl){
                 errors.push("Icon url is required.");
+            }
+            if(!rocketUrl){
+                errors.push("Rocket url is required.");
             }
             if(!botName){
                 errors.push("Bot name is required.");
@@ -91,7 +95,8 @@ var SlackNotifierAdmin = {
                     proxyHost: $("proxyHost").value,
                     proxyPort: $("proxyPort").value,
                     proxyUser: $("proxyUser").value,
-                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value)
+                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
+                    rocketUrl: $("rocketUrl").value
                 },
                 type: "GET"
             }).done(function() {
@@ -128,7 +133,8 @@ var SlackNotifierAdmin = {
                     proxyHost: $("proxyHost").value,
                     proxyPort: $("proxyPort").value,
                     proxyUser: $("proxyUser").value,
-                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value)
+                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
+                    rocketUrl: $("rocketUrl").value
                 },
                 type: "POST"
             }).done(function() {

@@ -32,9 +32,16 @@
           </div>
 
           <table class="runnerFormTable">
-                <tr class="groupingTitle">
-                        <td colspan="2">General Configuration&nbsp;<a href="https://github.com/petegoo/tcSlackBuildNotifier" class="helpIcon" style="vertical-align: middle;" target="_blank"><bs:helpIcon/></a></td>
-                </tr>
+              <tr>
+                  <th>
+                      <label for="rocketUrl">Rocket chat URL: <l:star /></label>
+                  </th>
+                  <td>
+                      <forms:textField name="rocketUrl" value="${rocketUrl}" style="width: 500px;" />
+                      <span class="smallNote">Rocket chat URL</span>
+
+                  </td>
+              </tr>
                 <tr>
                     <th>
                         <label for="token">API token: <l:star /></label>
