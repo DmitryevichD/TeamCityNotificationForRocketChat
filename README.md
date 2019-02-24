@@ -19,19 +19,19 @@ You will need to restart the TeamCity service before you can configure the plugi
 
 ## Configuration
 
-Once you have installed the plugin and restarted head on over to the Admin page and configure your Slack settings.
+Once you have installed the plugin and restarted head on over to the Admin page and configure your Rocket settings.
 
 ![Admin Page Configuration](https://raw.github.com/petegoo/tcSlackBuildNotifier/master/docs/AdminPageBig.png)
 
 - *your default channel* is the channel with the # in front of it e.g. #general.
 - *your team name* is the team e.g. mycoolteam NOT mycoolteam.slack.com.
-- The user token is available when you got to https://api.slack.com/web while logged in to your Slack instance. Under "authentication" you should see a token displayed like below. Alternatively you can use the full URL from the `Incoming Webhooks` integration in the API token field. The webhooks integration approach is sometimes more preferable as the token is not tied to a user account.
+- The user token is available when you got to https://api.slack.com/web while logged in to your Rocket instance. Under "authentication" you should see a token displayed like below. Alternatively you can use the full URL from the `Incoming Webhooks` integration in the API token field. The webhooks integration approach is sometimes more preferable as the token is not tied to a user account.
 
 ![Sample Auth Token](https://raw.github.com/petegoo/tcSlackBuildNotifier/master/docs/SlackToken.png)
 
 ## Usage
 
-From the Slack tab on the project or build page (_not_ the Build Configuration Settings page), add a new Slack Notification and you're away!
+From the Slack tab on the project or build page (_not_ the Build Configuration Settings page), add a new Rocket Notification and you're away!
 
 ![Sample Build Configuration](https://raw.github.com/petegoo/tcSlackBuildNotifier/master/docs/build-slack-config.png)
 
@@ -39,7 +39,7 @@ From the Slack tab on the project or build page (_not_ the Build Configuration S
 
 ### Mentions
 
-In order to receive mentions and direct messages from the notifier you must go to your profile page in TeamCity and tell it your Slack username (no need to include the @). Once you have done this you can be mentioned on failed builds. You can also subscribe to notifications on your profile page.
+In order to receive mentions and direct messages from the notifier you must go to your profile page in TeamCity and tell it your Rocket username (no need to include the @). Once you have done this you can be mentioned on failed builds. You can also subscribe to notifications on your profile page.
 
 ## Contribution
 

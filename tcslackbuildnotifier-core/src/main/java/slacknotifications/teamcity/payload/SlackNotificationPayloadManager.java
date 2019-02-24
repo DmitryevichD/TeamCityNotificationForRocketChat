@@ -22,6 +22,10 @@ public class SlackNotificationPayloadManager {
         Loggers.SERVER.info("SlackNotificationPayloadManager :: Starting");
     }
 
+    public SlackNotificationPayloadContent buildContent(SRunningBuild runningBuild, SFinishedBuild previousBuild, BuildStateEnum stateEnum) {
+        SlackNotificationPayloadContent content = new SlackNotificationPayloadContent(server, runningBuild, previousBuild, stateEnum);
+        return content;
+    }
 
     public SlackNotificationPayloadContent beforeBuildFinish(SRunningBuild runningBuild, SFinishedBuild previousBuild) {
         SlackNotificationPayloadContent content = new SlackNotificationPayloadContent(server, runningBuild, previousBuild, BuildStateEnum.BEFORE_BUILD_FINISHED);
@@ -60,7 +64,7 @@ public class SlackNotificationPayloadManager {
             newUser = responsibilityInfoNew.getResponsibleUser().getDescriptiveName();
         } catch (Exception e) {}
 
-        content.setText(buildType.getFullName() 
+        content.setText(buildType.getFullName()
                         + " changed responsibility from "
                         + oldUser
                         + " to "
@@ -123,19 +127,19 @@ public class SlackNotificationPayloadManager {
 	Comparator<SlackNotificationPayload> rankComparator = new SlackNotificationPayloadRankingComparator();
 	List<SlackNotificationPayload> orderedFormatCollection = new ArrayList<SlackNotificationPayload>();
 	SBuildServer server;
-	
+
 	public SlackNotificationPayloadManager(SBuildServer server){
 		this.server = server;
 		Loggers.SERVER.info("SlackNotificationPayloadManager :: Starting");
 	}
-	
+
 	public void registerPayloadFormat(SlackNotificationPayload payloadFormat){
-		Loggers.SERVER.info(this.getClass().getSimpleName() + " :: Registering payload " 
-				+ payloadFormat.getFormatShortName() 
+		Loggers.SERVER.info(this.getClass().getSimpleName() + " :: Registering payload "
+				+ payloadFormat.getFormatShortName()
 				+ " with rank of " + payloadFormat.getRank());
 		formats.put(payloadFormat.getFormatShortName(),payloadFormat);
 		this.orderedFormatCollection.add(payloadFormat);
-		
+
 		Collections.sort(this.orderedFormatCollection, rankComparator);
 		Loggers.SERVER.debug(this.getClass().getSimpleName() + " :: Payloads list is " + this.orderedFormatCollection.size() + " items long. Payloads are ranked in the following order..");
 		for (SlackNotificationPayload pl : this.orderedFormatCollection){
@@ -149,22 +153,22 @@ public class SlackNotificationPayloadManager {
 		}
 		return null;
 	}
-	
+
 	public Boolean isRegisteredFormat(String format){
 		return formats.containsKey(format);
 	}
-	
+
 	public Set<String> getRegisteredFormats(){
 		return formats.keySet();
 	}
-	
+
 	public Collection<SlackNotificationPayload> getRegisteredFormatsAsCollection(){
 		return orderedFormatCollection;
 	}
 
 	public SBuildServer getServer() {
 		return server;
-	}	
+	}
 */
-	
+
 }

@@ -27,8 +27,8 @@ public class SlackNotifierAdminPage extends AdminPage {
     private static final String AFTER_PAGE_ID = "jabber";
     private static final String BEFORE_PAGE_ID = "clouds";
     private static final String PAGE = "SlackNotification/slackAdminSettings.jsp";
-    private static final String PLUGIN_NAME = "slackNotifications";
-    private static final String TAB_TITLE = "Slack Notifications";
+    private static final String PLUGIN_NAME = "rocketNotifications";
+    private static final String TAB_TITLE = "Rocket Notifications";
     private final String jspHome;
     private SBuildServer sBuildServer;
     private SlackNotificationMainSettings slackMainSettings;
@@ -52,7 +52,7 @@ public class SlackNotifierAdminPage extends AdminPage {
         before.add(BEFORE_PAGE_ID);
         setPosition(PositionConstraint.between(after, before));
         register();
-        Loggers.SERVER.info("Slack global configuration page registered");
+        Loggers.SERVER.info("Rocket global configuration page registered");
     }
 
     @Override
@@ -72,19 +72,19 @@ public class SlackNotifierAdminPage extends AdminPage {
         model.put("showElapsedBuildTime", this.slackMainSettings.getShowElapsedBuildTime());
         model.put("showFailureReason", this.slackMainSettings.getShowFailureReason());
 
-        SlackNotificationProxyConfig proxyConfig = this.slackMainSettings.getProxyConfig();
-        model.put("proxyHost", proxyConfig.getProxyHost());
-        model.put("proxyPort", proxyConfig.getProxyPort());
-        model.put("proxyUser", proxyConfig.getCreds() == null ? null : proxyConfig.getCreds().getUserPrincipal().getName());
-        model.put("proxyPassword", proxyConfig.getCreds() == null ? null : proxyConfig.getCreds().getPassword());
-        model.put("encryptedProxyPassword", proxyConfig.getCreds() == null || proxyConfig.getCreds().getPassword() == null ? null : RSACipher.encryptDataForWeb(proxyConfig.getCreds().getPassword()));
-        model.put("hexEncodedPublicKey", RSACipher.getHexEncodedPublicKey());
+//        SlackNotificationProxyConfig proxyConfig = this.slackMainSettings.getProxyConfig();
+//        model.put("proxyHost", proxyConfig.getProxyHost());
+//        model.put("proxyPort", proxyConfig.getProxyPort());
+//        model.put("proxyUser", proxyConfig.getCreds() == null ? null : proxyConfig.getCreds().getUserPrincipal().getName());
+//        model.put("proxyPassword", proxyConfig.getCreds() == null ? null : proxyConfig.getCreds().getPassword());
+//        model.put("encryptedProxyPassword", proxyConfig.getCreds() == null || proxyConfig.getCreds().getPassword() == null ? null : RSACipher.encryptDataForWeb(proxyConfig.getCreds().getPassword()));
+//        model.put("hexEncodedPublicKey", RSACipher.getHexEncodedPublicKey());
 
-        try {
-            model.put("pluginVersion", this.slackMainSettings.getPluginVersion());
-        } catch (IOException e) {
-            Loggers.ACTIVITIES.error("Could not retrieve slack plugin version", e);
-        }
+//        try {
+//            model.put("pluginVersion", this.slackMainSettings.getPluginVersion());
+//        } catch (IOException e) {
+//            Loggers.ACTIVITIES.error("Could not retrieve slack plugin version", e);
+//        }
 
         model.put("disabled", !this.slackMainSettings.getEnabled());
         model.put("jspHome", this.jspHome);

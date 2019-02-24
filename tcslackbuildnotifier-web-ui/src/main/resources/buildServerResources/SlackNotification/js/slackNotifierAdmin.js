@@ -8,10 +8,10 @@ var SlackNotifierAdmin = {
             var botName = document.forms["slackNotifierAdminForm"]["botName"].value;
             var maxCommitsToDisplay = document.forms["slackNotifierAdminForm"]["maxCommitsToDisplay"].value;
             var showCommits = document.forms["slackNotifierAdminForm"]["showCommits"].checked;
-            var proxyHost = document.forms["slackNotifierAdminForm"]["proxyHost"].value;
-            var proxyPort = document.forms["slackNotifierAdminForm"]["proxyPort"].value;
-            var proxyUser = document.forms["slackNotifierAdminForm"]["proxyUser"].value;
-            var proxyPassword = document.forms["slackNotifierAdminForm"]["proxyPassword"].value;
+            // var proxyHost = document.forms["slackNotifierAdminForm"]["proxyHost"].value;
+            // var proxyPort = document.forms["slackNotifierAdminForm"]["proxyPort"].value;
+            // var proxyUser = document.forms["slackNotifierAdminForm"]["proxyUser"].value;
+            // var proxyPassword = document.forms["slackNotifierAdminForm"]["proxyPassword"].value;
             var errors = [];
 
             if(!teamName){
@@ -26,12 +26,12 @@ var SlackNotifierAdmin = {
             if(!botName){
                 errors.push("Bot name is required.");
             }
-            if(proxyHost && !proxyPort){
-                errors.push("Proxy port is required if a host is specified.");
-            }
-            if(proxyUser && !proxyPassword){
-                errors.push("Proxy password is required if a user is specified.");
-            }
+            // if(proxyHost && !proxyPort){
+            //     errors.push("Proxy port is required if a host is specified.");
+            // }
+            // if(proxyUser && !proxyPassword){
+            //     errors.push("Proxy password is required if a user is specified.");
+            // }
             if(!showCommits){
                 if(!maxCommitsToDisplay){
                     errors.push("Max commits to display is required.");

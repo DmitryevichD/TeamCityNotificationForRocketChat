@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class SlackNotificationImpl implements SlackNotification {
-	
+
 	private static final String UTF8 = "UTF-8";
 
     private String proxyHost;
@@ -133,30 +133,31 @@ public class SlackNotificationImpl implements SlackNotification {
     public void setProxy(String proxyHost, Integer proxyPort, Credentials credentials) {
         this.proxyHost = proxyHost;
         this.proxyPort = proxyPort;
-        
+
 		if (this.proxyHost.length() > 0 && !this.proxyPort.equals(0)) {
             HttpClientBuilder clientBuilder = HttpClients.custom()
                 .useSystemProperties()
                 .setProxy(new HttpHost(proxyHost, proxyPort, "http"));
-                
+
             if (credentials != null) {
                 CredentialsProvider credsProvider = new BasicCredentialsProvider();
                 credsProvider.setCredentials(new AuthScope(proxyHost, proxyPort), credentials);
                 clientBuilder.setDefaultCredentialsProvider(credsProvider);
                 Loggers.SERVER.debug("SlackNotification ::using proxy credentials " + credentials.getUserPrincipal().getName());
             }
-            
+
             this.client = clientBuilder.build();
 		}
     }
 
     public void post() throws IOException {
-        if(getIsApiToken()){
-            postViaApi();
-        }
-        else{
-            postViaWebHook();
-        }
+        postReactChat();
+//        if(getIsApiToken()){
+//            postViaApi();
+//        }
+//        else{
+//            postViaWebHook();
+//        }
 
     }
 
@@ -204,6 +205,41 @@ public class SlackNotificationImpl implements SlackNotification {
                 httppost.releaseConnection();
             }
         }
+    }
+
+    public void postReactChat() throws IOException  {
+        HttpPost httppost = new HttpPost("https://openbank-rc.cherashev.com/api/v1/chat.postMessage");
+
+        httppost.setHeader("X-Auth-Token", this.token);
+        httppost.setHeader("X-User-Id", this.teamName);
+        httppost.setHeader("Content-type", "application/json");
+
+        List<Attachment> attachments = getAttachments();
+
+        String attachmentsParam = "";
+
+        try {
+            attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
+            String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.botName + "\", " + attachmentsParam + "}";
+            httppost.setEntity(new StringEntity(body));
+        } catch (Exception ex) {
+            int i = 10;
+        }
+        int ss = 20;
+
+        try {
+            HttpResponse response = client.execute(httppost);
+            this.resultCode = response.getStatusLine().getStatusCode();
+            if (this.resultCode == HttpStatus.SC_OK) {
+                this.response = PostMessageResponse.fromJson(EntityUtils.toString(response.getEntity()));
+            }
+            if (response.getEntity().getContentLength() > 0) {
+                this.content = EntityUtils.toString(response.getEntity());
+            }
+        } finally {
+            httppost.releaseConnection();
+        }
+
     }
 
     private void postViaWebHook() throws IOException {
@@ -349,7 +385,7 @@ public class SlackNotificationImpl implements SlackNotification {
                 attachment.addField("Changes By", committersString, false);
             }
         }
-        
+
         if (showTriggeredBy){
             attachment.addField("Triggered By", this.payload.getTriggeredBy(), false);
         }
@@ -647,7 +683,7 @@ public class SlackNotificationImpl implements SlackNotification {
     public void setShowCommits(boolean showCommits) {
         this.showCommits = showCommits;
     }
-	
+
     @Override
     public void setShowCommitters(boolean showCommitters) {
         this.showCommitters = showCommitters;

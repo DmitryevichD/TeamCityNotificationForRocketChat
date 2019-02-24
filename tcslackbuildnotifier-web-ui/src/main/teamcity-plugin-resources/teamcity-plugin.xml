@@ -2,13 +2,12 @@
 <teamcity-plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:noNamespaceSchemaLocation="urn:shemas-jetbrains-com:teamcity-plugin-v1-xml">
   <info>
-    <name>tcSlackNotifications</name>
-    <display-name>Slack Notifications plugin</display-name>
+    <name>tcRocketNotifications</name>
+    <display-name>Rocketchat Notifications plugin</display-name>
     <version>${version}</version>
     <description>Trigger slack notifications POST requests from build events. Adds tabs to the Project and Build pages.</description>
     <vendor>
-      <name>PeteGoo</name>
-      <url>http://blog.petegoo.com/</url>
+      <name>D.Dmitrievich</name>
     </vendor>
   </info>
   <deployment use-separate-classloader="false"/>

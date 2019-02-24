@@ -47,7 +47,7 @@ public class SlackNotificator implements Notificator {
         Loggers.ACTIVITIES.debug("Registering SlackNotificator...");
 
         userProps = new ArrayList<UserPropertyInfo>();
-        userProps.add(new UserPropertyInfo(SLACK_USERID_KEY, "Slack User Id"));
+        userProps.add(new UserPropertyInfo(SLACK_USERID_KEY, "Rocket User Id"));
         notificatorRegistry.register(this, userProps);
         mainConfig = configSettings;
         notificationFactory = factory;
@@ -191,7 +191,7 @@ public class SlackNotificator implements Notificator {
     @NotNull
     @Override
     public String getDisplayName() {
-        return "Slack Notifier";
+        return "Rocket Notifier";
     }
 
 

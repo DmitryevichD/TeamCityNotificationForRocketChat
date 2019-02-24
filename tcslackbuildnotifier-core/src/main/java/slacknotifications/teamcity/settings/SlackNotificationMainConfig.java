@@ -53,7 +53,7 @@ public class SlackNotificationMainConfig implements ChangeListener {
     private String token;
 	private Boolean proxyShortNames = false;
     private boolean enabled = true;
-	
+
 	public final String SINGLE_HOST_REGEX = "^[^./~`'\"]+(?:/.*)?$";
 	public final String HOSTNAME_ONLY_REGEX = "^([^/]+)(?:/.*)?$";
     private SlackNotificationContentConfig content;
@@ -130,7 +130,7 @@ public class SlackNotificationMainConfig implements ChangeListener {
 	}
 
 
-	
+
 	public Element getInfoUrlAsElement(){
 		/*
 			<info url="http://acme.com/" text="Using SlackNotifications in Acme Inc." />
@@ -144,13 +144,13 @@ public class SlackNotificationMainConfig implements ChangeListener {
 				e.setAttribute("text", slacknotificationInfoUrl);
 			}
 			e.setAttribute("show-reading", slacknotificationShowFurtherReading.toString());
-			
+
 			return e;
 		}
 		return null;
 	}
 
-	
+
 	public Element getProxyAsElement(){
 		/*
     		  <proxy host="myproxy.mycompany.com" port="8080" >
@@ -164,12 +164,12 @@ public class SlackNotificationMainConfig implements ChangeListener {
 		Element el = new Element(PROXY);
 		el.setAttribute("host", this.getProxyHost());
 		el.setAttribute("port", String.valueOf(this.getProxyPort()));
-		if (   this.proxyPassword != null && this.proxyPassword.length() > 0 
+		if (   this.proxyPassword != null && this.proxyPassword.length() > 0
 			&& this.proxyUsername != null && this.proxyUsername.length() > 0 )
 		{
 			el.setAttribute(USERNAME, this.getProxyUsername());
 			el.setAttribute(PASSWORD, this.getProxyPassword());
-			
+
 		}
 		return el;
 	}

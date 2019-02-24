@@ -17,8 +17,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -43,39 +43,39 @@
 			</plugin>
 		</plugins>
 
-		<resources> 
+		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering> 
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 
-		<!-- <resources> <resource> <directory>src/main/resources</directory> <filtering>false</filtering> 
-			</resource> <resource> <directory>src/main/teamcity-plugin-resources</directory> 
-			<filtering>true</filtering> <includes> <include>*.xml</include> <include>*.properties</include> 
-			</includes> </resource> <resource> <directory>src/main/teamcity-plugin-resources</directory> 
-			<filtering>false</filtering> <excludes> <exclude>*.xml</exclude> <exclude>*.properties</exclude> 
-			</excludes> </resource> </resources> <pluginManagement> <plugins> </plugins> 
-			</pluginManagement> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-			<artifactId>maven-site-plugin</artifactId> <version>2.0</version> <executions> 
-			<execution> <goals> <goal>jar</goal> </goals> </execution> </executions> 
-			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
-			<configuration> <source>1.5</source> <target>1.5</target> </configuration> 
-			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
-			<version>2.1</version> <executions> <execution> <id>attach-sources</id> <phase>package</phase> 
-			<goals> <goal>jar-no-fork</goal> </goals> </execution> </executions> </plugin> 
-			<plugin> <artifactId>maven-antrun-plugin</artifactId> <executions> <execution> 
-			<phase>package</phase> <configuration> <tasks> <echo message="Attempting 
-			to build dist zip file" /> <mkdir dir="${project.build.directory}/dist" /> 
-			<mkdir dir="${project.build.directory}/dist/server" /> <echo message=" - 
-			Copying resources to dist" /> <copy todir="${project.build.directory}/dist/"> 
-			<fileset dir="${project.build.directory}/classes/"> <include name="teamcity-plugin.xml"/> 
-			</fileset> </copy> <echo message=" - Copying dep jar to dist/server" /> <copy 
-			todir="${project.build.directory}/dist/server/"> <fileset dir="${project.build.directory}/"> 
-			<include name="${artifactId}-${version}.jar" /> </fileset> </copy> <echo 
+		<!-- <resources> <resource> <directory>src/main/resources</directory> <filtering>false</filtering>
+			</resource> <resource> <directory>src/main/teamcity-plugin-resources</directory>
+			<filtering>true</filtering> <includes> <include>*.xml</include> <include>*.properties</include>
+			</includes> </resource> <resource> <directory>src/main/teamcity-plugin-resources</directory>
+			<filtering>false</filtering> <excludes> <exclude>*.xml</exclude> <exclude>*.properties</exclude>
+			</excludes> </resource> </resources> <pluginManagement> <plugins> </plugins>
+			</pluginManagement> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId> <version>2.0</version> <executions>
+			<execution> <goals> <goal>jar</goal> </goals> </execution> </executions>
+			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId>
+			<configuration> <source>1.5</source> <target>1.5</target> </configuration>
+			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId>
+			</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId>
+			<version>2.1</version> <executions> <execution> <id>attach-sources</id> <phase>package</phase>
+			<goals> <goal>jar-no-fork</goal> </goals> </execution> </executions> </plugin>
+			<plugin> <artifactId>maven-antrun-plugin</artifactId> <executions> <execution>
+			<phase>package</phase> <configuration> <tasks> <echo message="Attempting
+			to build dist zip file" /> <mkdir dir="${project.build.directory}/dist" />
+			<mkdir dir="${project.build.directory}/dist/server" /> <echo message=" -
+			Copying resources to dist" /> <copy todir="${project.build.directory}/dist/">
+			<fileset dir="${project.build.directory}/classes/"> <include name="teamcity-plugin.xml"/>
+			</fileset> </copy> <echo message=" - Copying dep jar to dist/server" /> <copy
+			todir="${project.build.directory}/dist/server/"> <fileset dir="${project.build.directory}/">
+			<include name="${artifactId}-${version}.jar" /> </fileset> </copy> <echo
 			message=" - Creating ZIP file" /> <zip destfile="${project.build.directory}/tcSlackNotificationsPlugin-${version}.zip"
-			basedir="${project.build.directory}/dist" /> </tasks> </configuration> <goals> 
+			basedir="${project.build.directory}/dist" /> </tasks> </configuration> <goals>
 			<goal>run</goal> </goals> </execution> </executions> </plugin> </plugins> -->
 	</build>
 	<reporting>
@@ -106,7 +106,7 @@
 			<id>tcslacknotifications.sourceforge</id>
 			<url>http://svn.code.sf.net/p/tcplugins/code/maven2-repo</url>
 		</repository>
-		<!-- <repository> <id>jetbrains-all</id> <url>http://repository.jetbrains.com/all</url> 
+		<!-- <repository> <id>jetbrains-all</id> <url>http://repository.jetbrains.com/all</url>
 			</repository> -->
 	</repositories>
 	<dependencies>
@@ -152,7 +152,7 @@
 		</dependency>
 
 		<!-- TeamCity/webapps/WEB-INF/lib/server-model.jar -->
-		<!-- <dependency> <groupId>com.jetbrains.teamcity</groupId> <artifactId>model</artifactId> 
+		<!-- <dependency> <groupId>com.jetbrains.teamcity</groupId> <artifactId>model</artifactId>
 			<version>4.0.2</version> <scope>provided</scope> </dependency> -->
 
 		<!-- TeamCity/webapps/WEB-INF/lib/common-api.jar -->
@@ -163,7 +163,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.jetbrains.teamcity</groupId> <artifactId>openapi</artifactId> 
+		<!-- <dependency> <groupId>com.jetbrains.teamcity</groupId> <artifactId>openapi</artifactId>
 			<version>7.1.0</version> <scope>provided</scope> </dependency> -->
 
 		<dependency>
@@ -261,6 +261,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.6</version>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 

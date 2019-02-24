@@ -22,7 +22,7 @@ import java.util.Map;
 
 
 public class SlackNotificationBuildTabExtension extends BuildTypeTab {
-	
+
 	private static final String  SLACK_NOTIFICATIONS = "slackNotifications";
 	SlackNotificationProjectSettings settings;
 	ProjectSettingsManager projSettings;
@@ -33,7 +33,7 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
             ProjectSettingsManager settings, WebControllerManager manager,
             PluginDescriptor pluginDescriptor) {
 		//super(myTitle, myTitle, null, projectManager);
-		super(SLACK_NOTIFICATIONS, "Slack", manager, projectManager);
+		super(SLACK_NOTIFICATIONS, "Rocket", manager, projectManager);
 		this.projSettings = settings;
 		myPluginPath = pluginDescriptor.getPluginResourcesPath();
 	}
@@ -47,9 +47,9 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 	@Override
 	protected void fillModel(Map model, HttpServletRequest request,
 			 @NotNull SBuildType buildType, SUser user) {
-		this.settings = 
+		this.settings =
 			(SlackNotificationProjectSettings)this.projSettings.getSettings(buildType.getProject().getProjectId(), SLACK_NOTIFICATIONS);
-		
+
 		List<ProjectAndBuildSlacknotificationsBean> projectAndParents = new ArrayList<ProjectAndBuildSlacknotificationsBean>();
 		List<SProject> parentProjects = buildType.getProject().getProjectPath();
 		parentProjects.remove(0);
@@ -62,7 +62,7 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 							)
 					);
 		}
-		
+
 //		projectAndParents.add(
 //				ProjectAndBuildSlacknotificationsBean.newInstance(
 //						project,
@@ -72,10 +72,10 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 //				);
 
 		model.put("projectAndParents", projectAndParents);
-    	
+
 //    	List<SlackNotificationConfig> projectSlacknotifications = this.settings.getProjectSlackNotificationsAsList();
 //    	List<SlackNotificationConfig> buildSlacknotifications = this.settings.getBuildSlackNotificationsAsList(buildType);
-//    	
+//
 //    	model.put("projectSlackNotificationCount", projectSlacknotifications.size());
 //    	if (projectSlacknotifications.size() == 0){
 //    		model.put("noProjectSlackNotifications", "true");
@@ -86,7 +86,7 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 //    		model.put("projectSlackNotificationList", projectSlacknotifications);
 //    		model.put("projectSlackNotificationsDisabled", !this.settings.isEnabled());
 //    	}
-//    	
+//
 //    	model.put("buildSlackNotificationCount", buildSlacknotifications.size());
 //    	if (buildSlacknotifications.size() == 0){
 //    		model.put("noBuildSlackNotifications", "true");
@@ -96,12 +96,12 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 //    		model.put("buildSlackNotifications", "true");
 //    		model.put("buildSlackNotificationList", buildSlacknotifications);
 //    	}
-//    	
+//
 
     	model.put("projectId", buildType.getProject().getProjectId());
     	model.put("projectExternalId", TeamCityIdResolver.getExternalProjectId(buildType.getProject()));
     	model.put("projectName", buildType.getProject().getName());
-    	
+
     	model.put("buildTypeId", buildType.getBuildTypeId());
     	model.put("buildExternalId", TeamCityIdResolver.getExternalBuildId(buildType));
     	model.put("buildName", buildType.getName());
@@ -114,5 +114,5 @@ public class SlackNotificationBuildTabExtension extends BuildTypeTab {
 	}
 
 
-	
+
 }

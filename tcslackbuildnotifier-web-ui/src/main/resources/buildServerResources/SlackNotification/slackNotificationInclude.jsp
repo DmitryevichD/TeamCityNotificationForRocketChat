@@ -19,8 +19,8 @@
 					<td class="value highlight slackNotificationRowItemBuilds" style="width:15%;">Builds</td>
 					<td class="edit highlight slackNotificationRowItemEdit"><a href="javascript://">edit</a></td>
 					<td class="edit highlight slackNotificationRowItemDelete"><a ref="javascript://">delete</a></td>
-				</tr> 	
-	
+				</tr>
+
 			<c:forEach items="${slackNotificationList}" var="notification">
 
 				<tr id="viewRow_${notification.uniqueKey}" class="slackNotificationRow">
@@ -29,19 +29,19 @@
 					<td class="value highlight" style="width:15%;" onclick="BS.EditSlackNotificationDialog.showDialog('${notification.uniqueKey}','#buildPane');"><c:out value="${notification.buildTypeCountAsFriendlyString}" /></td>
 					<td class="edit highlight"><a onclick="BS.EditSlackNotificationDialog.showDialog('${notification.uniqueKey}','#hookPane');" href="javascript://">edit</a></td>
 					<td class="edit highlight"><a onclick="BS.SlackNotificationForm.removeSlackNotification('${notification.uniqueKey}','#hookPane');" href="javascript://">delete</a></td>
-				</tr> 
+				</tr>
 			</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
-		<c:choose>  
-    		<c:when test="${haveBuild}"> 
-					<td colspan="6" class="highlight newSlackNotificationRow"><p onclick="BS.EditSlackNotificationDialog.showDialog('new');" class="addNew">Click to create new SlackNotification for this build</p></td>
-         	</c:when>  
-         	<c:otherwise>  
-					<td colspan="6" class="highlight newSlackNotificationRow"><p onclick="BS.EditSlackNotificationDialog.showDialog('new');" class="addNew">Click to create new SlackNotification for this project</p></td>
-         	</c:otherwise>  
-		</c:choose> 
+		<c:choose>
+    		<c:when test="${haveBuild}">
+					<td colspan="6" class="highlight newSlackNotificationRow"><p onclick="BS.EditSlackNotificationDialog.showDialog('new');" class="addNew">Click to create new Rocket notification for this build</p></td>
+         	</c:when>
+         	<c:otherwise>
+					<td colspan="6" class="highlight newSlackNotificationRow"><p onclick="BS.EditSlackNotificationDialog.showDialog('new');" class="addNew">Click to create new Rocket notification for this project</p></td>
+         	</c:otherwise>
+		</c:choose>
 				</tr>
 			</tfoot>
 		</table>
@@ -59,7 +59,7 @@
           <form id='SlackNotificationForm' action="ajaxEdit.html?projectId=${projectId}"
                 method="post" onsubmit="return BS.SlackNotificationForm.saveSlackNotification();">
             <div id='slackNotificationFormContents'>
-            
+
             		<div id="tab-container" class="tab-container">
 								  <ul class='etabs'>
 												   <li class='tab'><a href="#hookPane" class="active">General</a></li>
@@ -69,7 +69,7 @@
 						 <div class='panel-container'>
 									<div id='hookPane'>
 											<table style="border:none;">
-												
+
 												<tr style="border:none;">
 													<td>API Token:</td>
 													<td colspan=2><input id="slackNotificationToken" name="token" type=text maxlength=512 style="margin: 0pt; padding: 0pt; width: 36em;"/></td>
@@ -119,7 +119,7 @@
 														 Build Responsibility Changed</label>
 													</td>
 												</tr>
-					
+
 												<tr style="border:none;" class="onCompletion"><td style="vertical-align:text-top; padding-top:0.33em;">On Completion:</td>
 													<td colspan=2 >
 														<table style="padding:0; margin:0; left: 0px;"><tbody style="padding:0; margin:0; left: 0px;">
@@ -150,7 +150,7 @@
 													</td>
 													<td><label style='white-space:nowrap;'>
 														<input class="buildState" id="mentionSlackUserEnabled" name="mentionSlackUserEnabled" type=checkbox />
-														 Slack User (if known)</label>
+														Rocket User (if known)</label>
 													</td>
 												</tr>
 												<tr style="border:none;"><td>&nbsp;</td>
@@ -163,8 +163,8 @@
 													<td><label for="mentionWhoTriggeredEnabled">Mention who triggered:</label></td>
 													<td style="padding-left:3px;" colspan=2><input id="mentionWhoTriggeredEnabled" type=checkbox name="mentionWhoTriggeredEnabled"/></td>
 												</tr>
-					    					</table>     
-					    					
+					    					</table>
+
 					    			</div><!--hookPane -->
 					    			<div id='payloadPane'>
                                         <table style="border:none;">
@@ -254,7 +254,7 @@
                                         </table>
 
                                 </div>
-					    			
+
 					    			<div id='buildPane'>
 					    				<p style="border-bottom:solid 1px #cccccc; margin:0; padding:0.5em;"><label><input name="buildTypeAll" onclick="toggleAllBuildTypesSelected();" type=checkbox style="padding-right: 1em;" class="buildType_all"><strong>All Project Builds</strong></label></p>
 					    				<p style="border-bottom:solid 1px #cccccc; margin:0; padding:0.5em;"><label><input id="buildTypeSubProjects" name="buildTypeSubProjects" onclick="updateSelectedBuildTypes();" type=checkbox style="padding-right: 1em;" class="buildType_subprojects"><strong>All Sub-Project Builds</strong></label></p>
@@ -262,14 +262,14 @@
 						            	</div>
 						            </div>
 					    	</div><!-- panel-container  -->
-					</div>    <!-- tab-container -->   
-		            
+					</div>    <!-- tab-container -->
+
 		            <!--
 		            <label class="editParameterLabel" for="parameterName">Name: <span class="mandatoryAsterix" title="Mandatory field">*</span></label>
 					<input type="text" name="parameterName" id="parameterName" size="" maxlength="512" value="" class="textfield" style="margin:0; padding:0; width:22em;"   >
-		
+
 		            <span class="error" id="error_parameterName" style="margin-left: 5.5em;"></span>
-		
+
 		            <div class="clr" style="height:3px;"></div>
 		            <label class="editParameterLabel" for="parameterValue">Value:</label>
 					<input type="text" name="parameterValue" id="parameterValue" size="" maxlength="512" value="" class="textfield" style="margin:0; padding:0; width:22em;"   >
@@ -292,4 +292,4 @@
           </form>
 	    </div>
     </div>
-          
+

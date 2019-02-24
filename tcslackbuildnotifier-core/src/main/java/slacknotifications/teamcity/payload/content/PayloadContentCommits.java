@@ -29,7 +29,7 @@ public class PayloadContentCommits {
             if (!committers.isEmpty()) {
                 SUser committer = committers.iterator().next();
                 slackUserId = committer.getPropertyValue(SlackNotificator.USERID_KEY);
-                Loggers.ACTIVITIES.debug("Resolved committer " + change.getUserName() + " to Slack User " + slackUserId);
+                Loggers.ACTIVITIES.debug("Resolved committer " + change.getUserName() + " to Rocket User " + slackUserId);
             }
             commits.add(new Commit(change.getVersion(), change.getDescription(), change.getUserName(), slackUserId));
         }

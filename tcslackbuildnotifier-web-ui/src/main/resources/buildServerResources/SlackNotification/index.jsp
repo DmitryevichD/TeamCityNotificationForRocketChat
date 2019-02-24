@@ -1,5 +1,5 @@
 <%@ include file="/include.jsp" %>
-<c:set var="title" value="SlackNotifications" scope="request"/>
+<c:set var="title" value="Rocket notifications" scope="request"/>
 <bs:page>
 
     <jsp:attribute name="head_include">
@@ -8,15 +8,15 @@
         /css/admin/projectConfig.css
         /css/forms.css
         /css/admin/vcsRootsTable.css
-        
+
     /css/visibleProjects.css
     /css/addSidebar.css
     /css/settingsTable.css
     /css/profilePage.css
     /css/userRoles.css
-    
+
     ${jspHome}SlackNotification/css/styles.css
-        
+
       </bs:linkCSS>
       <bs:linkScript>
         /js/bs/blocks.js
@@ -31,20 +31,20 @@
       <script type="text/javascript">
         BS.Navigation.items = [
 		  {title: "Projects", url: '<c:url value="/overview.html"/>'},
-		  <c:if test="${haveProject}"> 
+		  <c:if test="${haveProject}">
 		  	{title: "${projectName}", url: '<c:url value="/project.html?projectId=${projectExternalId}"/>'},
 		  </c:if>
-		  <c:if test="${haveBuild}"> 
+		  <c:if test="${haveBuild}">
 		  	{title: "${buildName}", url: '<c:url value="/viewType.html?buildTypeId=${buildExternalId}"/>'},
 		  </c:if>
           {title: "${title}", selected:true}
         ];
-    
+
       </script>
     </jsp:attribute>
-    
-    
-      
+
+
+
     <jsp:attribute name="body_include">
     <c:if test="${includeJquery}">
     	<script type=text/javascript src="..${jspHome}SlackNotification/js/jquery-1.4.3.min.js"></script>
@@ -71,7 +71,7 @@
 			} else {
 				jQuerySlacknotification('.onBuildFixed').addClass('onCompletionDisabled');
 				jQuerySlacknotification('tr.onBuildFixed td input').attr('disabled', 'disabled');
-			} 
+			}
 			if(jQuerySlacknotification('#buildFailed').is(':checked')){
 				jQuerySlacknotification('.onBuildFailed').removeClass('onCompletionDisabled');
 				jQuerySlacknotification('tr.onBuildFailed td input').removeAttr('disabled');
@@ -90,20 +90,20 @@
                 jQuerySlacknotification('tr.onCustomContentEnabled td input').attr('disabled', 'disabled');
             }
 		}
-		
+
 		function toggleAllBuildTypesSelected(){
 			jQuerySlacknotification.each(jQuerySlacknotification('.buildType_single'), function(){
 				jQuerySlacknotification(this).attr('checked', jQuerySlacknotification('input.buildType_all').is(':checked'))
 			});
 			updateSelectedBuildTypes();
 		}
-		
+
 		function updateSelectedBuildTypes(){
 			var subText = "";
 		    if(jQuerySlacknotification('#buildTypeSubProjects').is(':checked')){
 		    	subText = " &amp; sub-projects";
 		    }
-		
+
 			if(jQuerySlacknotification('#slackNotificationFormContents input.buildType_single:checked').length == jQuerySlacknotification('#slackNotificationFormContents input.buildType_single').length){
 				jQuerySlacknotification('input.buildType_all').attr('checked', true);
 				jQuerySlacknotification('span#selectedBuildCount').html("all" + subText);
@@ -113,13 +113,13 @@
 			}
 
 		}
-		
+
 		function populateSlackNotificationDialog(id){
 			jQuerySlacknotification('#buildList').empty();
 			jQuerySlacknotification.each(ProjectBuilds.projectSlacknotificationConfig.slackNotificationList, function(thing, config){
 				if (id === config[0]){
 					var slacknotification = config[1];
-				
+
 					jQuerySlacknotification('#slackNotificationId').val(slacknotification.uniqueKey);
 					jQuerySlacknotification('#slackNotificationToken').val(slacknotification.token);
 					jQuerySlacknotification('#slackNotificationChannel').val(slacknotification.channel);
@@ -127,7 +127,7 @@
 				    jQuerySlacknotification.each(slacknotification.states, function(name, value){
 				    	jQuerySlacknotification('#' + value.buildStateName).attr('checked', value.enabled);
 				    });
-				    
+
                     jQuerySlacknotification('#buildTypeSubProjects').attr('checked', slacknotification.subProjectsEnabled);
 					jQuerySlacknotification.each(slacknotification.builds, function(){
 						 if (this.enabled){
@@ -154,7 +154,7 @@
 			});
 			updateSelectedBuildTypes();
 		}
-		
+
 		function addSlackNotificationsFromJsonCallback(){
 			jQuerySlacknotification.each(ProjectBuilds.projectSlacknotificationConfig.slackNotificationList, function(thing, config){
 				if ('new' !== config[0]){
@@ -171,7 +171,7 @@
 					jQuerySlacknotification("#viewRow_" + slacknotification.uniqueKey + " > td.slackNotificationRowItemBuilds").html(slacknotification.enabledBuildsListForWeb).click(function(){BS.EditSlackNotificationDialog.showDialog(slacknotification.uniqueKey, '#buildPane');});
 					jQuerySlacknotification("#viewRow_" + slacknotification.uniqueKey + " > td.slackNotificationRowItemEdit > a").click(function(){BS.EditSlackNotificationDialog.showDialog(slacknotification.uniqueKey,'#hookPane');});
 					jQuerySlacknotification("#viewRow_" + slacknotification.uniqueKey + " > td.slackNotificationRowItemDelete > a").click(function(){BS.SlackNotificationForm.removeSlackNotification(slacknotification.uniqueKey,'#hookPane');});
-					
+
 				}
 			});
 		}
@@ -183,11 +183,11 @@
 
 			  showDialog : function(id, tab) {
 				BS.SlackNotificationForm.clearErrors();
-			    
+
 			    populateSlackNotificationDialog(id);
 			    doExtraCompleted();
 			    toggleCustomContentEnabled();
-			    
+
 			    var title = id == "new" ? "Add New" : "Edit";
 			    title += " SlackNotification";
 
@@ -199,11 +199,11 @@
 			    } else {
 			    	jQuerySlacknotification('#editSlackNotificationDialog').innerWidth(slacknotificationDialogWidth);
 			    }
-			    
+
 			    this.showCentered();
 			    jQuerySlacknotification('#buildPane').innerHeight(jQuerySlacknotification('#hookPane').innerHeight());
 				jQuerySlacknotification('#tab-container').easytabs('select', tab);
-			    
+
 			    $('slackNotificationChannel').focus();
 			  },
 
@@ -278,16 +278,16 @@
 			});
 	</script>
     <div class="editBuildPageGeneral" style="background-color:white; float:left; margin:0; padding:0; width:70%;">
-    
-        <c:choose>  
-    		<c:when test="${haveBuild}"> 
-			    <h2 class="noBorder">SlackNotifications applicable to build ${buildName}</h2>
-			    To edit all slacknotifications for builds in the project <a href="index.html?projectId=${projectExternalId}">edit Project slacknotifications</a>.
-         	</c:when>  
-         	<c:otherwise>  
-			    <h2 class="noBorder">Slack notifications configured for project ${projectName}</h2>
-         	</c:otherwise>  
-		</c:choose>  
+
+        <c:choose>
+    		<c:when test="${haveBuild}">
+			    <h2 class="noBorder">Rocket notifications applicable to build ${buildName}</h2>
+			    To edit all rocket notifications for builds in the project <a href="index.html?projectId=${projectExternalId}">edit Project slacknotifications</a>.
+         	</c:when>
+         	<c:otherwise>
+			    <h2 class="noBorder">Rocket notifications configured for project ${projectName}</h2>
+         	</c:otherwise>
+		</c:choose>
 
 
   		<div id="messageArea"></div>
@@ -295,7 +295,7 @@
 
 		<c:choose>
 			<c:when test="${not haveProject}">
-				<strong>${errorReason}</strong><br/>Please access this page via the SlackNotifications tab on a project or build overview page.
+				<strong>${errorReason}</strong><br/>Please access this page via the Rocket notifications tab on a project or build overview page.
 			</c:when>
 			<c:otherwise>
 				<c:choose>
@@ -303,7 +303,7 @@
 					<%@ include file="slackNotificationInclude.jsp" %>
 					</c:when>
 					<c:otherwise>
-						<strong>You must have Project Administrator permission to edit SlackNotifications</strong>
+						<strong>You must have Project Administrator permission to edit Rocket notifications</strong>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
@@ -313,41 +313,20 @@
       </div>
     <div id=sidebarAdmin>
       <div class=configurationSection>
-      	<h2>Slack Notification Information</h2>
-          <p>Slack notifications appear in your slack channels when builds are started and/or completed. </p>
-
-			<c:choose>
-				<c:when test="${ShowFurtherReading == 'ALL'}">
-				          <p>Further Reading:
-				          <ul>${moreInfoText}
-				          	<li><a href="https://github.com/PeteGoo/tcSlackBuildNotifier">tcSlackBuildNotifier plugin</a></li>
-				          </ul>	
-				</c:when>
-		
-				<c:when test="${ShowFurtherReading == 'DEFAULT'}">
-				          <p>Further Reading:
-				          <li><a href="https://github.com/PeteGoo/tcSlackBuildNotifier">tcSlackBuildNotifier plugin</a></li>
-				          </ul>	
-				</c:when>
-		
-				<c:when test="${ShowFurtherReading == 'SINGLE'}">
-				          <p>Further Reading:
-				          <ul>${moreInfoText}</ul>
-				</c:when>
-			</c:choose>
-
+      	<h2>Rocket Notification Information</h2>
+          <p>Rocket notifications appear in your slack channels when builds are started and/or completed. </p>
       </div>
     </div>
     <script type=text/javascript>
 	        $('systemParams').updateContainer = function() {
-        <c:choose>  
-    		<c:when test="${haveBuild}"> 
+        <c:choose>
+    		<c:when test="${haveBuild}">
 	          	jQuerySlacknotification.get("settingsList.html?buildTypeId=${buildExternalId}", function(data) {
-         	</c:when>  
-         	<c:otherwise>  
+         	</c:when>
+         	<c:otherwise>
 	          	jQuerySlacknotification.get("settingsList.html?projectId=${projectId}", function(data) {
-         	</c:otherwise>  
-		</c:choose>  	        
+         	</c:otherwise>
+		</c:choose>
 	          		ProjectBuilds = data;
 	          		jQuerySlacknotification('.slackNotificationRow').remove();
 	          		addSlackNotificationsFromJsonCallback();

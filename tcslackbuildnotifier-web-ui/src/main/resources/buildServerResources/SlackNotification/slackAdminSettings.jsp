@@ -37,22 +37,20 @@
                 </tr>
                 <tr>
                     <th>
-                        <label for="teamName">Team name: <l:star /></label>
-                    </th>
-                    <td>
-                        <forms:textField name="teamName" value="${teamName}" style="width: 300px;" />
-                        <span class="smallNote">This must be the name as shown in the URL of your Slack team page. e.g. myslackteam.slack.com would mean you enter myslackteam.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <label for="token">API token: <l:star /></label>
                     </th>
                     <td>
-                        <forms:textField name="token" value="${token}" style="width: 300px;" />
-                        <span class="smallNote">A user OAuth token for your team. You can get this from the <a href="https://api.slack.com/web" target="_blank">api page</a> when you are signed in to your team. If you are using the "Incoming WebHooks" integration you can simply enter the webhook URL in here instead.</span>
+                        <forms:textField name="token" value="${token}" style="width: 500px;" />
                     </td>
                 </tr>
+              <tr>
+                  <th>
+                      <label for="teamName">User ID: <l:star /></label>
+                  </th>
+                  <td>
+                      <forms:textField name="teamName" value="${teamName}" style="width: 500px;" />
+                  </td>
+              </tr>
                 <tr>
                     <th>
                         <label for="botName">Bot name: <l:star /></label>
@@ -69,7 +67,7 @@
                     <td>
                         <forms:textField name="iconUrl" value="${iconUrl}" style="width: 300px;" />
                         <span class="smallNote">The url of the icon to appear beside your bot. You can leave this as the default or customize it to a png file.</span>
-                        <span class="smallNote">The default is <b>https://raw.githubusercontent.com/PeteGoo/tcSlackBuildNotifier/master/docs/TeamCity72x72.png</b>
+                        <%--<span class="smallNote">The default is <b>https://raw.githubusercontent.com/PeteGoo/tcSlackBuildNotifier/master/docs/TeamCity72x72.png</b>--%>
                     </td>
                 </tr>
                 <tr>
@@ -216,7 +214,7 @@
 		$("#disable-btn")
             .click(
                 function() {
-                    if (!confirm("Slack notifications will not be sent until enabled. Disable the notifier?"))
+                    if (!confirm("Rocket notifications will not be sent until enabled. Disable the notifier?"))
                         return false;
                     return sendAction(false);
                 });
