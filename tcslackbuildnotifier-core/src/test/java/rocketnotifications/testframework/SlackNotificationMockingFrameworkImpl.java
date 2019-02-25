@@ -1,0 +1,156 @@
+package rocketnotifications.testframework;
+
+import jetbrains.buildServer.messages.Status;
+import jetbrains.buildServer.serverSide.*;
+import jetbrains.buildServer.serverSide.settings.ProjectSettingsManager;
+import org.jdom.JDOMException;
+import rocketnotifications.SlackNotification;
+import rocketnotifications.SlackNotificationImpl;
+import rocketnotifications.teamcity.*;
+import rocketnotifications.teamcity.payload.RocketNotificationPayloadManager;
+import rocketnotifications.teamcity.payload.content.SlackNotificationPayloadContent;
+import rocketnotifications.teamcity.settings.SlackNotificationConfig;
+import rocketnotifications.teamcity.settings.RocketNotificationMainSettings;
+import rocketnotifications.teamcity.settings.RocketNotificationProjectSettings;
+import rocketnotifications.testframework.util.ConfigLoaderUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+import static rocketnotifications.teamcity.RocketNotificationListener.ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME;
+
+public class SlackNotificationMockingFrameworkImpl implements SlackNotificationMockingFramework {
+	
+	SlackNotificationPayloadContent content;
+	SlackNotificationConfig slackNotificationConfig;
+	SBuildServer sBuildServer = mock(SBuildServer.class);
+	BuildHistory buildHistory = mock(BuildHistory.class);
+	ProjectSettingsManager settings = mock(ProjectSettingsManager.class);
+	ProjectManager projectManager = mock(ProjectManager.class);
+	RocketNotificationMainSettings configSettings = mock(RocketNotificationMainSettings.class);
+	RocketNotificationPayloadManager manager = mock(RocketNotificationPayloadManager.class);
+//	SlackNotificationPayload payload = new SlackNotificationPayloadDetailed(manager);
+	RocketNotificationProjectSettings projSettings;
+	SlackNotificationFactory factory = mock(SlackNotificationFactory.class);
+	SlackNotification slacknotification = mock (SlackNotification.class);
+	SlackNotification slackNotificationImpl;
+	SlackNotification spySlackNotification;
+	SFinishedBuild previousSuccessfulBuild = mock(SFinishedBuild.class);
+	SFinishedBuild previousFailedBuild = mock(SFinishedBuild.class);
+	List<SFinishedBuild> finishedSuccessfulBuilds = new ArrayList<SFinishedBuild>();
+	List<SFinishedBuild> finishedFailedBuilds = new ArrayList<SFinishedBuild>();
+	SBuildType sBuildType = new MockSBuildType("Test Build", "A Test Build", "bt1");
+	SBuildType sBuildType02 = new MockSBuildType("Test Build-2", "A Test Build 02", "bt2");
+	SBuildType sBuildType03 = new MockSBuildType("Test Build-2", "A Test Build 03", "bt3");
+	SRunningBuild sRunningBuild = new MockSRunningBuild(sBuildType, "SubVersion", Status.NORMAL, "Running", "TestBuild01");
+	SProject sProject = new MockSProject("Test Project", "A test project", "project1", "ATestProject", sBuildType);
+	SProject sProject02 = new MockSProject("Test Project 02", "A test project 02", "project2", "TestProjectNumber02", sBuildType);
+	SProject sProject03 = new MockSProject("Test Project 03", "A test sub project 03", "project3", "TestProjectNumber02_TestProjectNumber03", sBuildType);
+	
+	SBuildType build2 = mock(SBuildType.class);
+	SBuildType build3 = mock(SBuildType.class);
+	
+	RocketNotificationListener whl;
+	BuildStateEnum buildstateEnum;
+	
+	private SlackNotificationMockingFrameworkImpl() {
+		slackNotificationImpl = new SlackNotificationImpl();
+		spySlackNotification = spy(slackNotificationImpl);
+		whl = new RocketNotificationListener(sBuildServer, settings, configSettings, manager, factory);
+		projSettings = new RocketNotificationProjectSettings();
+		when(factory.getSlackNotification()).thenReturn(spySlackNotification);
+		//when(manager.isRegisteredFormat("JSON")).thenReturn(true);
+//		when(manager.getFormat("JSON")).thenReturn(payload);
+		//when(manager.getServer()).thenReturn(sBuildServer);
+		when(projectManager.findProjectById("project01")).thenReturn(sProject);
+		when(sBuildServer.getHistory()).thenReturn(buildHistory);
+		when(sBuildServer.getRootUrl()).thenReturn("http://test.server");
+		when(sBuildServer.getProjectManager()).thenReturn(projectManager);
+		when(previousSuccessfulBuild.getBuildStatus()).thenReturn(Status.NORMAL);
+		when(previousSuccessfulBuild.isPersonal()).thenReturn(false);
+		when(previousFailedBuild.getBuildStatus()).thenReturn(Status.FAILURE);
+		when(previousFailedBuild.isPersonal()).thenReturn(false);
+		finishedSuccessfulBuilds.add(previousSuccessfulBuild);
+		finishedFailedBuilds.add(previousFailedBuild);
+		((MockSBuildType) sBuildType).setProject(sProject);
+		when(settings.getSettings(sRunningBuild.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME)).thenReturn(projSettings);
+		
+		when(build2.getBuildTypeId()).thenReturn("bt2");
+		when(build2.getInternalId()).thenReturn("bt2");
+		when(build2.getName()).thenReturn("This is Build 2");
+		when(build3.getBuildTypeId()).thenReturn("bt3");
+		when(build3.getInternalId()).thenReturn("bt3");
+		when(build3.getName()).thenReturn("This is Build 3");
+		((MockSProject) sProject).addANewBuildTypeToTheMock(build2);
+		((MockSProject) sProject).addANewBuildTypeToTheMock(build3);
+		((MockSProject) sProject02).addANewBuildTypeToTheMock(sBuildType02);
+		((MockSProject) sProject03).addANewBuildTypeToTheMock(sBuildType03);
+		((MockSProject) sProject03).setParentProject(sProject02);
+		((MockSProject) sProject02).addChildProjectToMock(sProject03);
+		whl.register();
+		
+	}
+
+	public static SlackNotificationMockingFramework create(BuildStateEnum buildState) {
+		SlackNotificationMockingFrameworkImpl framework = new SlackNotificationMockingFrameworkImpl();
+		framework.buildstateEnum = buildState;
+		framework.content = new SlackNotificationPayloadContent(framework.sBuildServer, framework.sRunningBuild, framework.previousSuccessfulBuild, buildState);
+		return framework;
+	}
+
+	@Override
+	public SBuildServer getServer() {
+		return sBuildServer;
+	}
+
+	@Override
+	public SRunningBuild getRunningBuild() {
+		return sRunningBuild;
+	}
+	
+	@Override
+	public SlackNotificationPayloadContent getSlackNotificationContent() {
+		return content;
+	}
+
+	@Override
+	public void loadSlackNotificationConfigXml(File xmlConfigFile) throws JDOMException, IOException {
+		slackNotificationConfig = ConfigLoaderUtil.getFirstSlackNotificationInConfig(xmlConfigFile);
+		this.content = new SlackNotificationPayloadContent(this.sBuildServer, this.sRunningBuild, this.previousSuccessfulBuild, this.buildstateEnum);
+		
+	}
+	
+	@Override
+	public void loadSlackNotificationProjectSettingsFromConfigXml(File xmlConfigFile) throws IOException, JDOMException{
+		projSettings.readFrom(ConfigLoaderUtil.getFullConfigElement(xmlConfigFile).getChild("slackNotifications"));
+	}
+	
+	@Override
+	public SlackNotificationConfig getSlackNotificationConfig() {
+		return slackNotificationConfig;
+	}
+
+	@Override
+	public RocketNotificationProjectSettings getSlackNotificationProjectSettings() {
+		return projSettings;
+	}
+
+	@Override
+	public RocketNotificationPayloadManager getSlackNotificationPayloadManager() {
+		return manager;
+	}
+
+	@Override
+	public SBuildType getSBuildType() {
+		return sBuildType;
+	}
+
+	@Override
+	public SBuildType getSBuildTypeFromSubProject() {
+		return sBuildType03;
+	}
+
+}

@@ -3,104 +3,67 @@
 
 <beans default-autowire="constructor">
 
-	<bean id="slackNotificationListener"
-		class="slacknotifications.teamcity.SlackNotificationListener"
+	<bean id="rocketNotificationListener"
+		class="rocketnotifications.teamcity.RocketNotificationListener"
   		init-method="register" 
   		/>
-  		
-	<!-- bean id="testListener" 
-		class="slacknotifications.teamcity.TestListener"
-  		init-method="register" 
-  		/-->
 
-	<bean id="slackNotificationNotificator"
-		  class="slacknotifications.teamcity.SlackNotificator"
+	<bean id="rocketNotificationNotificator"
+		  class="rocketnotifications.teamcity.RocketNotificator"
 		  init-method="register"
 			/>
 
-	<bean id="slackNotifierAdminPage" class="slacknotifications.teamcity.extension.SlackNotifierAdminPage"/>
+	<bean id="slackNotifierAdminPage" class="rocketnotifications.teamcity.extension.RocketNotifierAdminPage"/>
 
-    <bean id="slackNotifierSettingsController" class="slacknotifications.teamcity.extension.SlackNotifierSettingsController"/>
+    <bean id="slackNotifierSettingsController" class="rocketnotifications.teamcity.extension.RocketNotifierSettingsController"/>
 
-	<bean id="slackNotificationProjectTabExtension"
-        class="slacknotifications.teamcity.extension.SlackNotificationProjectTabExtension"
+	<bean id="rocketNotificationProjectTabExtension"
+        class="rocketnotifications.teamcity.extension.RocketNotificationProjectTabExtension"
         init-method="register" 
         />
 
-	<bean id="slackNotificationBuildTabExtension"
-        class="slacknotifications.teamcity.extension.SlackNotificationBuildTabExtension"
+	<bean id="rocketNotificationBuildTabExtension"
+        class="rocketnotifications.teamcity.extension.RocketNotificationBuildTabExtension"
         init-method="register" 
         />
  
-    <bean id="slackNotificationIndexPageController"
-     	class="slacknotifications.teamcity.extension.SlackNotificationIndexPageController"
+    <bean id="rocketNotificationIndexPageController"
+     	class="rocketnotifications.teamcity.extension.RocketNotificationIndexPageController"
      	init-method="register" 
      	/>
 
-     <bean id="slackNotificationAjaxSettingsListPageController"
-     	class="slacknotifications.teamcity.extension.SlackNotificationAjaxSettingsListPageController"
+     <bean id="rocketNotificationAjaxSettingsListPageController"
+     	class="rocketnotifications.teamcity.extension.RocketNotificationAjaxSettingsListPageController"
      	init-method="register" 
      	/>
 
-     <bean id="slackNotificationAjaxEditPageController"
-     	class="slacknotifications.teamcity.extension.SlackNotificationAjaxEditPageController"
+     <bean id="rocketNotificationAjaxEditPageController"
+     	class="rocketnotifications.teamcity.extension.RocketNotificationAjaxEditPageController"
      	init-method="register" 
      	/>
      			
-     <bean id="slackNotificationFactory"
-     	class="slacknotifications.teamcity.SlackNotificationFactoryImpl"
+     <bean id="rocketNotificationFactory"
+     	class="rocketnotifications.teamcity.RocketNotificationFactoryImpl"
      	/>
      			
-     <bean id="slackNotificationProjectSettings"
-     	class="slacknotifications.teamcity.settings.SlackNotificationProjectSettings"
+     <bean id="rocketNotificationProjectSettings"
+     	class="rocketnotifications.teamcity.settings.RocketNotificationProjectSettings"
      	/>
 
-     <bean id="slackNotificationProjectSettingsFactory"
-     	class="slacknotifications.teamcity.settings.SlackNotificationProjectSettingsFactory"
+     <bean id="rocketNotificationProjectSettingsFactory"
+     	class="rocketnotifications.teamcity.settings.RocketNotificationProjectSettingsFactory"
      	/>
 
-	<bean id="slackNotificationMainSettings"
-		class="slacknotifications.teamcity.settings.SlackNotificationMainSettings"
+	<bean id="rocketNotificationMainSettings"
+		class="rocketnotifications.teamcity.settings.RocketNotificationMainSettings"
 		init-method="register"
 		/>
 
-    <bean id="slackNotificationMainConfig"
-          class="slacknotifications.teamcity.settings.SlackNotificationMainConfig"/>
+    <bean id="rocketNotificationMainConfig"
+          class="rocketnotifications.teamcity.settings.RocketNotificationMainConfig"/>
 
-	<bean id="slackNotificationPayloadManager"
-		class="slacknotifications.teamcity.payload.SlackNotificationPayloadManager"
+	<bean id="rocketNotificationPayloadManager"
+		class="rocketnotifications.teamcity.payload.RocketNotificationPayloadManager"
 		/>
-
-	<!--<bean id="slackNotificationPayloadNameValuePairs"
-		class="slacknotifications.teamcity.payload.format.SlackNotificationPayloadSummary"
-		init-method="register">
-		<property name="rank">
-			<value>15</value>
-		</property>
-	</bean>
-
-	<bean id="slackNotificationPayloadJson"
-		class="slacknotifications.teamcity.payload.format.SlackNotificationPayloadDetailed"
-		init-method="register">
-		<property name="rank">
-			<value>10</value>
-		</property>
-	</bean>
-
-	<bean id="slackNotificationPayloadXml"
-		class="slacknotifications.teamcity.payload.format.SlackNotificationPayloadXml"
-		init-method="register">
-		<property name="rank">
-			<value>8</value>
-		</property>
-	</bean>
-
-	<bean id="slackNotificationEmptyPayload"
-		class="slacknotifications.teamcity.payload.format.SlackNotificationPayloadShort"
-		init-method="register">
-		<property name="rank">
-			<value>5</value>
-		</property>
-	</bean>-->
 
 </beans>
