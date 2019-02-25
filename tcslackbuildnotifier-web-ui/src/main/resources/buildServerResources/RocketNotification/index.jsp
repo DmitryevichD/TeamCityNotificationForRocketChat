@@ -15,7 +15,7 @@
     /css/profilePage.css
     /css/userRoles.css
 
-    ${jspHome}SlackNotification/css/styles.css
+    ${jspHome}RocetNotification/css/styles.css
 
       </bs:linkCSS>
       <bs:linkScript>
@@ -47,9 +47,9 @@
 
     <jsp:attribute name="body_include">
     <c:if test="${includeJquery}">
-    	<script type=text/javascript src="..${jspHome}SlackNotification/js/jquery-1.4.3.min.js"></script>
+    	<script type=text/javascript src="..${jspHome}RocketNotification/js/jquery-1.4.3.min.js"></script>
     </c:if>
-	<script type=text/javascript src="..${jspHome}SlackNotification/js/jquery.easytabs.min.js"></script>
+	<script type=text/javascript src="..${jspHome}RocketNotification/js/jquery.easytabs.min.js"></script>
     <script type=text/javascript>
 		var jQuerySlacknotification = jQuery.noConflict();
 		var slacknotificationDialogWidth = -1;

@@ -64,8 +64,8 @@ public class RocketNotificationMainConfig implements ChangeListener {
 
 	public RocketNotificationMainConfig(ServerPaths serverPaths) {
         this.content = new SlackNotificationContentConfig();
-		this.myConfigDir = new File(serverPaths.getConfigDir(), "slack");
-		this.myConfigFile = new File(this.myConfigDir, "slack-config.xml");
+		this.myConfigDir = new File(serverPaths.getConfigDir(), "rocket");
+		this.myConfigFile = new File(this.myConfigDir, "rocket-config.xml");
         configFileExists = this.myConfigFile.exists();
 		reloadConfiguration();
 		this.myChangeObserver = new FileWatcher(this.myConfigFile);
@@ -82,7 +82,7 @@ public class RocketNotificationMainConfig implements ChangeListener {
 		Loggers.ACTIVITIES.info("Loading configuration file: " + this.myConfigFile.getAbsolutePath());
 
 		myConfigDir.mkdirs();
-		FileUtil.copyResourceIfNotExists(getClass(), "/config_templates/slack-config.xml", new File(this.myConfigDir, "slack-config.xml"));
+		FileUtil.copyResourceIfNotExists(getClass(), "/config_templates/rocket-config.xml", new File(this.myConfigDir, "rocket-config.xml"));
 
 		Document document = parseFile(this.myConfigFile);
 		if (document != null)

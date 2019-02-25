@@ -1,4 +1,4 @@
-var SlackNotifierAdmin = {
+var RocketNotifierAdmin = {
 
     validate : function(){
         try{
@@ -71,7 +71,7 @@ var SlackNotifierAdmin = {
     },
 
     sendTestNotification : function() {
-        if(!SlackNotifierAdmin.validate()) {
+        if(!RocketNotifierAdmin.validate()) {
             return false;
         }
 
@@ -109,7 +109,7 @@ var SlackNotifierAdmin = {
     },
 
     save : function() {
-        if(!SlackNotifierAdmin.validate()) {
+        if(!RocketNotifierAdmin.validate()) {
             return false;
         }
 

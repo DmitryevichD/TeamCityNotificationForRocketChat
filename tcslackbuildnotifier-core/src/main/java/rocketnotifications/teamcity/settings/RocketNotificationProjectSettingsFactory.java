@@ -10,13 +10,13 @@ import static rocketnotifications.teamcity.RocketNotificationListener.ROCKET_NOT
 public class RocketNotificationProjectSettingsFactory implements ProjectSettingsFactory {
 	
 	public RocketNotificationProjectSettingsFactory(ProjectSettingsManager projectSettingsManager){
-		Loggers.SERVER.info("SlackNotificationProjectSettingsFactory :: Registering");
+		Loggers.SERVER.info("RocketNotificationProjectSettingsFactory :: Registering");
 		projectSettingsManager.registerSettingsFactory(ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME, this);
 	}
 
 	@Override
 	public RocketNotificationProjectSettings createProjectSettings(String projectId) {
-		Loggers.SERVER.info("SlackNotificationProjectSettingsFactory: re-reading settings for " + projectId);
+		Loggers.SERVER.info("RocketNotificationProjectSettingsFactory: re-reading settings for " + projectId);
 		RocketNotificationProjectSettings whs = new RocketNotificationProjectSettings();
 		return whs;
 	}

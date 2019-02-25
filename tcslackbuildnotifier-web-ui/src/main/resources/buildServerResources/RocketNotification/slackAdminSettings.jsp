@@ -2,13 +2,13 @@
 
 <c:url value="/rocketNotifier/adminSettings.html" var="actionUrl" />
 <bs:linkCSS dynamic="${true}">
-  ${jspHome}SlackNotification/css/adminStyles.css
+  ${jspHome}RocketNotification/css/adminStyles.css
 </bs:linkCSS>
 
 
 
 <div id="settingsContainer">
-  <form action="${actionUrl}" id="slackNotifierAdminForm" method="post" onsubmit="return SlackNotifierAdmin.save()" >
+  <form action="${actionUrl}" id="slackNotifierAdminForm" method="post" onsubmit="return RocketNotifierAdmin.save()" >
     <div class="editNotificatorSettingsPage">
           <div>
              <span class="slackNotifierVersionInfo">Version: <c:out value='${pluginVersion}'/>&nbsp;<a href="https://github.com/petegoo/tcSlackBuildNotifier" class="helpIcon" style="vertical-align: middle;" target="_blank"><bs:helpIcon/></a></span>
@@ -195,14 +195,14 @@
             <div class="saveButtonsBlock">
                 <input type="hidden" id="publicKey" name="publicKey" value="<c:out value='${hexEncodedPublicKey}'/>"/>
                 <forms:submit label="Save" />
-                <forms:submit id="testConnection" type="button" label="Send test notification" onclick="return SlackNotifierAdmin.sendTestNotification()"/>
+                <forms:submit id="testConnection" type="button" label="Send test notification" onclick="return RocketNotifierAdmin.sendTestNotification()"/>
                 <forms:saving />
             </div>
     </div>
   </form>
 
   <bs:linkScript>
-    ${jspHome}SlackNotification/js/slackNotifierAdmin.js
+    ${jspHome}RocketNotification/js/rocketNotifierAdmin.js
   </bs:linkScript>
 </div>
 
