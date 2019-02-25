@@ -28,8 +28,8 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
 	}
 
     public void register(){
-//        Loggers.SERVER.debug(NAME + ":: Registering");
-//        server.registerExtension(MainConfigProcessor.class, "slacknotifications", this);
+        Loggers.SERVER.debug(NAME + ":: Registering");
+        server.registerExtension(MainConfigProcessor.class, ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME, this);
     }
 
 	public String getProxySettingsAsString(){

@@ -59,8 +59,8 @@ public class RocketNotificationListener extends BuildServerAdapter {
     }
 
     public void register(){
-//        myBuildServer.addListener(this);
-//        Loggers.SERVER.info("SlackNotificationListener :: Registering");
+        myBuildServer.addListener(this);
+        Loggers.SERVER.info("SlackNotificationListener :: Registering");
     }
 
 	public void getFromConfig(SlackNotification slackNotification, SlackNotificationConfig slackNotificationConfig){
