@@ -82,23 +82,23 @@ public class RocketNotifierSettingsController extends BaseController {
         HashMap<String, Object> params = new HashMap<String, Object>();
 
         if(request.getParameter(EDIT_PARAMETER) != null){
-            logger.debug("Updating configuration");
             params = this.handleConfigurationChange(request);
+//            //logger.debug("Updating configuration");
         }
         else if(request.getParameter(TEST_PARAMETER) != null){
-            logger.debug("Sending test notification");
             params = this.handleTestNotification(request);
+//            //logger.debug("Sending test notification");
         } else if (request.getParameter(ACTION_PARAMETER) != null) {
-            logger.debug("Changing plugin status");
+//            //logger.debug("Changing plugin status");
             this.handlePluginStatusChange(request);
         }
         return new ModelAndView(descriptor.getPluginResourcesPath() + "RocketNotification/ajaxEdit.jsp", params);
     }
 
     private void handlePluginStatusChange(HttpServletRequest request) {
-        logger.debug("Changing status");
+        //logger.debug("Changing status");
         Boolean disabled = !request.getParameter(ACTION_PARAMETER).equals(ACTION_ENABLE);
-        logger.debug(String.format("Disabled status: %s", disabled));
+        //logger.debug(String.format("Disabled status: %s", disabled));
         this.config.setEnabled(!disabled);
         this.config.save();
     }
