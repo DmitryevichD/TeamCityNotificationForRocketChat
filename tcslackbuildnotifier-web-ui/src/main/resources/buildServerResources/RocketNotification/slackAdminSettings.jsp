@@ -67,6 +67,22 @@
                         <span class="smallNote">The name that will be displayed by your bot messages. Mostly you can leave this as <b>TeamCity</b></span>
                     </td>
                 </tr>
+              <tr>
+                  <th>
+                      <label for="title">Title: <l:star /></label>
+                  </th>
+                  <td>
+                      <forms:textField name="title" value="${title}" style="width: 500px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      <label for="emoji">Emoji:</label>
+                  </th>
+                  <td>
+                      <forms:textField name="emoji" value="${emoji}" style="width: 300px;" />
+                  </td>
+              </tr>
                 <tr>
                     <th>
                         <label for="iconUrl">Icon url: <l:star /></label>
@@ -152,45 +168,45 @@
                         <span style="color: #888; font-size: 90%;">When checked, the reason for the build failure, including failed tests are displayed.</span>
                     </td>
                 </tr>
-                <tr class="groupingTitle">
-                        <td colspan="2">Proxy Configuration</td>
-                </tr>
-<tr>
-                    <th>
-                        <label for="proxyHost">Proxy host:</label>
-                    </th>
-                    <td>
-                        <forms:textField name="proxyHost" value="${proxyHost}" style="width: 300px;" />
-                        <span class="smallNote">The hostname of the proxy server. e.g. myproxy.mycompany.com</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="proxyPort">Proxy port:</label>
-                    </th>
-                    <td>
-                        <forms:textField name="proxyPort" value="${proxyPort}" style="width: 70px;" />
-                        <span class="smallNote">The port of the proxy server.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="botName">Proxy username:</label>
-                    </th>
-                    <td>
-                        <forms:textField name="proxyUser" value="${proxyUser}" style="width: 300px;" />
-                        <span class="smallNote">An optional username to use for proxy authentication.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="proxyPassword">Proxy password:</label>
-                    </th>
-                    <td>
-                        <forms:passwordField name="proxyPassword" encryptedPassword="${encryptedProxyPassword}" style="width: 300px;" />
-                        <span class="smallNote">An optional password to use for proxy authentication.</span>
-                    </td>
-                </tr>
+                <%--<tr class="groupingTitle">--%>
+                        <%--<td colspan="2">Proxy Configuration</td>--%>
+                <%--</tr>--%>
+<%--<tr>--%>
+                    <%--<th>--%>
+                        <%--<label for="proxyHost">Proxy host:</label>--%>
+                    <%--</th>--%>
+                    <%--<td>--%>
+                        <%--<forms:textField name="proxyHost" value="${proxyHost}" style="width: 300px;" />--%>
+                        <%--<span class="smallNote">The hostname of the proxy server. e.g. myproxy.mycompany.com</span>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th>--%>
+                        <%--<label for="proxyPort">Proxy port:</label>--%>
+                    <%--</th>--%>
+                    <%--<td>--%>
+                        <%--<forms:textField name="proxyPort" value="${proxyPort}" style="width: 70px;" />--%>
+                        <%--<span class="smallNote">The port of the proxy server.</span>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th>--%>
+                        <%--<label for="botName">Proxy username:</label>--%>
+                    <%--</th>--%>
+                    <%--<td>--%>
+                        <%--<forms:textField name="proxyUser" value="${proxyUser}" style="width: 300px;" />--%>
+                        <%--<span class="smallNote">An optional username to use for proxy authentication.</span>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<th>--%>
+                        <%--<label for="proxyPassword">Proxy password:</label>--%>
+                    <%--</th>--%>
+                    <%--<td>--%>
+                        <%--<forms:passwordField name="proxyPassword" encryptedPassword="${encryptedProxyPassword}" style="width: 300px;" />--%>
+                        <%--<span class="smallNote">An optional password to use for proxy authentication.</span>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
            </table>
             <div class="saveButtonsBlock">
                 <input type="hidden" id="publicKey" name="publicKey" value="<c:out value='${hexEncodedPublicKey}'/>"/>

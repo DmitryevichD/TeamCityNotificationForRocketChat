@@ -72,7 +72,7 @@ public class RocketNotificationListener extends BuildServerAdapter {
         slackNotification.setBotName(myMainSettings.getBotName());
 		slackNotification.setEnabled(myMainSettings.getEnabled() && slackNotificationConfig.getEnabled());
 		slackNotification.setBuildStates(slackNotificationConfig.getBuildStates());
-		slackNotification.setProxy(myMainSettings.getProxyConfig());
+//		slackNotification.setProxy(myMainSettings.getProxyConfig());
         slackNotification.setShowBuildAgent(myMainSettings.getShowBuildAgent());
         slackNotification.setShowElapsedBuildTime(myMainSettings.getShowElapsedBuildTime());
         slackNotification.setShowCommits(myMainSettings.getShowCommits());

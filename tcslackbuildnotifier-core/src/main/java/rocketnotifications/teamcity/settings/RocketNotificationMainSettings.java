@@ -32,9 +32,9 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
         server.registerExtension(MainConfigProcessor.class, ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME, this);
     }
 
-	public String getProxySettingsAsString(){
-		return this.slackNotificationMainConfig.getProxySettingsAsString();
-	}
+//	public String getProxySettingsAsString(){
+//		return this.slackNotificationMainConfig.getProxySettingsAsString();
+//	}
 
     @SuppressWarnings("unchecked")
     @Override
@@ -74,9 +74,9 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
         this.slackNotificationMainConfig = slackNotificationMainConfig;
     }
 
-    public String getProxy(){
-    	return this.slackNotificationMainConfig.getProxyConfig().getProxyHost();
-    }
+//    public String getProxy(){
+//    	return this.slackNotificationMainConfig.getProxyConfig().getProxyHost();
+//    }
 
     public String getInfoText(){
     	return this.slackNotificationMainConfig.getSlackNotificationInfoText();
@@ -106,6 +106,16 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
     public String getRocketUrl()
     {
         return this.slackNotificationMainConfig.getContent().getRocketUrl();
+    }
+
+    public String getTitle()
+    {
+        return this.slackNotificationMainConfig.getContent().getTitle();
+    }
+
+    public String getEmoji()
+    {
+        return this.slackNotificationMainConfig.getContent().getEmoji();
     }
 
     public String getBotName()
@@ -150,8 +160,8 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
 		Loggers.SERVER.debug(NAME + ":dispose() called");
 	}
 
-	public SlackNotificationProxyConfig getProxyConfig() {
-		return this.slackNotificationMainConfig.getProxyConfig();	}
+//	public SlackNotificationProxyConfig getProxyConfig() {
+//		return this.slackNotificationMainConfig.getProxyConfig();	}
 
 
     public int getMaxCommitsToDisplay() {

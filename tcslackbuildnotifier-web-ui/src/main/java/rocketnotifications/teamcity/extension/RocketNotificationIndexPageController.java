@@ -37,7 +37,7 @@ public class RocketNotificationIndexPageController extends BaseController {
 		private static final String FALSE = "false";
 		private static final String ERROR_REASON = "errorReason";
 		private static final String PROJECT_SLACK_NOTIFICATION_AS_JSON = "projectSlackNotificationsAsJson";
-		
+
 		private final WebControllerManager myWebManager;
 	    private final RocketNotificationMainSettings myMainSettings;
 	    private SBuildServer myServer;
@@ -64,12 +64,12 @@ public class RocketNotificationIndexPageController extends BaseController {
 		@Override
 	    @Nullable
 	    protected ModelAndView doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	
+
 	        HashMap<String,Object> params = new HashMap<String,Object>();
 	        params.put("jspHome",this.myPluginDescriptor.getPluginResourcesPath());
         	params.put("includeJquery", Boolean.toString(this.myServer.getServerMajorVersion() < 7));
         	params.put("rootContext", myServer.getServerRootPath());
-	        
+
 	    	if (myMainSettings.getInfoUrl() != null && myMainSettings.getInfoUrl().length() > 0){
 	    		params.put("moreInfoText", "<li><a href=\"" + myMainSettings.getInfoUrl() + "\">" + myMainSettings.getInfoText() + "</a></li>");
 	    		if (myMainSettings.getSlackNotificationShowFurtherReading()){
@@ -82,31 +82,31 @@ public class RocketNotificationIndexPageController extends BaseController {
 	    	} else {
 	    		params.put(SHOW_FURTHER_READING, "NONE");
 	    	}
-	        
+
 	        if(request.getParameter(PROJECT_ID) != null){
-	        	
+
 	        	SProject project = TeamCityIdResolver.findProjectById(this.myServer.getProjectManager(), request.getParameter("projectId"));
 	        	if (project != null){
-	        		
+
 			    	RocketNotificationProjectSettings projSettings = (RocketNotificationProjectSettings)
 			    			mySettings.getSettings(project.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME);
-			    	
+
 			        SUser myUser = SessionUser.getUser(request);
 			        params.put("hasPermission", myUser.isPermissionGrantedForProject(project.getProjectId(), Permission.EDIT_PROJECT));
-			    	
+
 			    	String message = projSettings.getSlackNotificationsAsString();
-			    	
+
 			    	params.put("haveProject", "true");
 			    	params.put("messages", message);
 			    	params.put(PROJECT_ID, project.getProjectId());
 			    	params.put("buildTypeList", project.getBuildTypes());
 			    	params.put("projectExternalId", TeamCityIdResolver.getExternalProjectId(project));
 			    	params.put("projectName", project.getName());
-			    	
-			    	logger.debug(myMainSettings.getInfoText() + myMainSettings.getInfoUrl() + myMainSettings.getProxySettingsAsString());
-			    	
+
+//			    	logger.debug(myMainSettings.getInfoText() + myMainSettings.getInfoUrl() + myMainSettings.getProxySettingsAsString());
+
 			    	params.put("slackNotificationCount", projSettings.getSlackNotificationsCount());
-			    	
+
 			    	if (projSettings.getSlackNotificationsCount() == 0){
 			    		params.put(NO_SLACK_NOTIFICATIONS, "true");
 			    		params.put(SLACK_NOTIFICATIONS, FALSE);
@@ -129,13 +129,13 @@ public class RocketNotificationIndexPageController extends BaseController {
         		if (sBuildType != null){
 		        	SProject project = sBuildType.getProject();
 		        	if (project != null){
-		        		
+
 				    	RocketNotificationProjectSettings projSettings = (RocketNotificationProjectSettings)
 				    			mySettings.getSettings(project.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME);
-				    	
+
 				    	SUser myUser = SessionUser.getUser(request);
 				        params.put("hasPermission", myUser.isPermissionGrantedForProject(project.getProjectId(), Permission.EDIT_PROJECT));
-				    	
+
 				    	List<SlackNotificationConfig> configs = projSettings.getBuildSlackNotificationsAsList(sBuildType);
 				    	params.put("slackNotificationList", configs);
 				    	params.put("slackNotificationsDisabled", !projSettings.isEnabled());
@@ -149,7 +149,7 @@ public class RocketNotificationIndexPageController extends BaseController {
 				    	params.put("buildTypeList", project.getBuildTypes());
 			    		params.put(NO_SLACK_NOTIFICATIONS, configs.isEmpty());
 			    		params.put(SLACK_NOTIFICATIONS, !configs.isEmpty());
-				    	
+
 			    		params.put(PROJECT_SLACK_NOTIFICATION_AS_JSON, ProjectSlackNotificationsBeanJsonSerialiser.serialise(ProjectSlackNotificationsBean.build(projSettings, sBuildType, project, myMainSettings)));
 		        	}
         		} else {

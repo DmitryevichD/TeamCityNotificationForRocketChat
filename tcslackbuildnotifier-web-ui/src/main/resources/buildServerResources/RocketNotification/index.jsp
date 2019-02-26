@@ -314,7 +314,7 @@
     <div id=sidebarAdmin>
       <div class=configurationSection>
       	<h2>Rocket Notification Information</h2>
-          <p>Rocket notifications appear in your slack channels when builds are started and/or completed. </p>
+          <p>Rocket notifications appear in your rocket channels when builds are started and/or completed. </p>
       </div>
     </div>
     <script type=text/javascript>

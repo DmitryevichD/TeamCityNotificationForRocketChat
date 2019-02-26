@@ -7,6 +7,7 @@ var RocketNotifierAdmin = {
             var iconUrl = document.forms["slackNotifierAdminForm"]["iconUrl"].value;
             var rocketUrl = document.forms["slackNotifierAdminForm"]["rocketUrl"].value;
             var botName = document.forms["slackNotifierAdminForm"]["botName"].value;
+            var title = document.forms["slackNotifierAdminForm"]["title"].value;
             var maxCommitsToDisplay = document.forms["slackNotifierAdminForm"]["maxCommitsToDisplay"].value;
             var showCommits = document.forms["slackNotifierAdminForm"]["showCommits"].checked;
             // var proxyHost = document.forms["slackNotifierAdminForm"]["proxyHost"].value;
@@ -29,6 +30,9 @@ var RocketNotifierAdmin = {
             }
             if(!botName){
                 errors.push("Bot name is required.");
+            }
+            if(!title){
+                errors.push("Title is required.");
             }
             // if(proxyHost && !proxyPort){
             //     errors.push("Proxy port is required if a host is specified.");
@@ -84,6 +88,8 @@ var RocketNotifierAdmin = {
                     defaultChannel: $("defaultChannel").value,
                     token: $("token").value,
                     botName: $("botName").value,
+                    title: $("title").value,
+                    emoji: $("emoji").value,
                     iconUrl: $("iconUrl").value,
                     maxCommitsToDisplay: $("maxCommitsToDisplay").value,
                     showCommits: $("showCommits").checked,
@@ -92,10 +98,10 @@ var RocketNotifierAdmin = {
                     showElapsedBuildTime: $("showElapsedBuildTime").checked,
                     showBuildAgent: $("showBuildAgent").checked,
                     showFailureReason: $("showFailureReason").checked,
-                    proxyHost: $("proxyHost").value,
-                    proxyPort: $("proxyPort").value,
-                    proxyUser: $("proxyUser").value,
-                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
+                    // proxyHost: $("proxyHost").value,
+                    // proxyPort: $("proxyPort").value,
+                    // proxyUser: $("proxyUser").value,
+                    // proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
                     rocketUrl: $("rocketUrl").value
                 },
                 type: "GET"
@@ -122,6 +128,8 @@ var RocketNotifierAdmin = {
                     defaultChannel: $("defaultChannel").value,
                     token: $("token").value,
                     botName: $("botName").value,
+                    title: $("title").value,
+                    emoji: $("emoji").value,
                     iconUrl: $("iconUrl").value,
                     maxCommitsToDisplay: $("maxCommitsToDisplay").value,
                     showCommits: $("showCommits").checked,
@@ -130,10 +138,10 @@ var RocketNotifierAdmin = {
                     showElapsedBuildTime: $("showElapsedBuildTime").checked,
                     showBuildAgent: $("showBuildAgent").checked,
                     showFailureReason: $("showFailureReason").checked,
-                    proxyHost: $("proxyHost").value,
-                    proxyPort: $("proxyPort").value,
-                    proxyUser: $("proxyUser").value,
-                    proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
+                    // proxyHost: $("proxyHost").value,
+                    // proxyPort: $("proxyPort").value,
+                    // proxyUser: $("proxyUser").value,
+                    // proxyPassword: $("proxyPassword").getEncryptedPassword($("publicKey").value),
                     rocketUrl: $("rocketUrl").value
                 },
                 type: "POST"

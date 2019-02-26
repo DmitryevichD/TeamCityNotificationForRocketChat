@@ -16,11 +16,13 @@ import java.io.IOException;
 
 public class RocketNotificationMainConfig implements ChangeListener {
     public static final String DEFAULT_BOTNAME = "TeamCity";
-    public static final String DEFAULT_ICONURL = "https://raw.githubusercontent.com/PeteGoo/tcSlackBuildNotifier/master/docs/TeamCity72x72.png";
+    public static final String DEFAULT_ICONURL = "http://res.guggy.com/logo_128.png";
 	private static final String TOKEN = "token";
 	private static final String DEFAULT_CHANNEL = "defaultChannel";
 	private static final String ICON_URL = "iconurl";
 	private static final String ROCKET_URL = "rocketUrl";
+	private static final String TITLE = "title";
+	private static final String EMOJI = "emoji";
 	private static final String BOT_NAME = "botname";
 	private static final String SHOW_BUILD_AGENT = "showBuildAgent";
 	private static final String SHOW_COMMITS = "showCommits";
@@ -44,15 +46,17 @@ public class RocketNotificationMainConfig implements ChangeListener {
 	private String slacknotificationInfoUrl = null;
 	private String slacknotificationInfoText = null;
 	private Boolean slacknotificationShowFurtherReading = true;
-	private Integer proxyPort = null;
-	private String proxyHost = null;
-	private String proxyUsername = null;
-	private String proxyPassword = null;
+//	private Integer proxyPort = null;
+//	private String proxyHost = null;
+//	private String proxyUsername = null;
+//	private String proxyPassword = null;
     private String defaultChannel = null;
     private String teamName;
     private String token;
-	private Boolean proxyShortNames = false;
+//	private Boolean proxyShortNames = false;
     private boolean enabled = true;
+//    private String title;
+//    private String emoji;
 
 	public final String SINGLE_HOST_REGEX = "^[^./~`'\"]+(?:/.*)?$";
 	public final String HOSTNAME_ONLY_REGEX = "^([^/]+)(?:/.*)?$";
@@ -111,9 +115,9 @@ public class RocketNotificationMainConfig implements ChangeListener {
 		return null;
 	}
 
-	public String getProxySettingsAsString(){
-    	return " host:" + this.proxyHost + " port: " + this.proxyPort;
-	}
+//	public String getProxySettingsAsString(){
+//    	return " host:" + this.proxyHost + " port: " + this.proxyPort;
+//	}
 
 	public String stripProtocolFromUrl(String url){
 		String tmpURL = url;
@@ -151,28 +155,28 @@ public class RocketNotificationMainConfig implements ChangeListener {
 	}
 
 
-	public Element getProxyAsElement(){
-		/*
-    		  <proxy host="myproxy.mycompany.com" port="8080" >
-      			<noproxy url=".mycompany.com" />
-      			<noproxy url="192.168.0." />
-    		  </proxy>
-		 */
-		if (this.getProxyHost() == null || this.getProxyPort() == null){
-			return null;
-		}
-		Element el = new Element(PROXY);
-		el.setAttribute("host", this.getProxyHost());
-		el.setAttribute("port", String.valueOf(this.getProxyPort()));
-		if (   this.proxyPassword != null && this.proxyPassword.length() > 0
-			&& this.proxyUsername != null && this.proxyUsername.length() > 0 )
-		{
-			el.setAttribute(USERNAME, this.getProxyUsername());
-			el.setAttribute(PASSWORD, this.getProxyPassword());
-
-		}
-		return el;
-	}
+//	public Element getProxyAsElement(){
+//		/*
+//    		  <proxy host="myproxy.mycompany.com" port="8080" >
+//      			<noproxy url=".mycompany.com" />
+//      			<noproxy url="192.168.0." />
+//    		  </proxy>
+//		 */
+//		if (this.getProxyHost() == null || this.getProxyPort() == null){
+//			return null;
+//		}
+//		Element el = new Element(PROXY);
+//		el.setAttribute("host", this.getProxyHost());
+//		el.setAttribute("port", String.valueOf(this.getProxyPort()));
+//		if (   this.proxyPassword != null && this.proxyPassword.length() > 0
+//			&& this.proxyUsername != null && this.proxyUsername.length() > 0 )
+//		{
+//			el.setAttribute(USERNAME, this.getProxyUsername());
+//			el.setAttribute(PASSWORD, this.getProxyPassword());
+//
+//		}
+//		return el;
+//	}
 
     public String getDefaultChannel() {
         return defaultChannel;
@@ -198,45 +202,45 @@ public class RocketNotificationMainConfig implements ChangeListener {
         this.token = token;
     }
 
-	public Integer getProxyPort() {
-		return proxyPort;
-	}
-
-	public void setProxyPort(Integer proxyPort) {
-		this.proxyPort = proxyPort;
-	}
-
-	public String getProxyHost() {
-		return proxyHost;
-	}
-
-	public void setProxyHost(String proxyHost) {
-		this.proxyHost = proxyHost;
-	}
-
-	public String getProxyUsername() {
-		return proxyUsername;
-	}
-
-	public void setProxyUsername(String proxyUsername) {
-		this.proxyUsername = proxyUsername;
-	}
-
-	public String getProxyPassword() {
-		return proxyPassword;
-	}
-
-	public void setProxyPassword(String proxyPassword) {
-		this.proxyPassword = proxyPassword;
-	}
-
-	public Boolean isProxyShortNames() {
-		return proxyShortNames;
-	}
-
-	public void setProxyShortNames(Boolean proxyShortNames) {
-		this.proxyShortNames = proxyShortNames;
-	}
+//	public Integer getProxyPort() {
+//		return proxyPort;
+//	}
+//
+//	public void setProxyPort(Integer proxyPort) {
+//		this.proxyPort = proxyPort;
+//	}
+//
+//	public String getProxyHost() {
+//		return proxyHost;
+//	}
+//
+//	public void setProxyHost(String proxyHost) {
+//		this.proxyHost = proxyHost;
+//	}
+//
+//	public String getProxyUsername() {
+//		return proxyUsername;
+//	}
+//
+//	public void setProxyUsername(String proxyUsername) {
+//		this.proxyUsername = proxyUsername;
+//	}
+//
+//	public String getProxyPassword() {
+//		return proxyPassword;
+//	}
+//
+//	public void setProxyPassword(String proxyPassword) {
+//		this.proxyPassword = proxyPassword;
+//	}
+//
+//	public Boolean isProxyShortNames() {
+//		return proxyShortNames;
+//	}
+//
+//	public void setProxyShortNames(Boolean proxyShortNames) {
+//		this.proxyShortNames = proxyShortNames;
+//	}
 
 	public String getSlackNotificationInfoUrl() {
 		return slacknotificationInfoUrl;
@@ -286,6 +290,8 @@ public class RocketNotificationMainConfig implements ChangeListener {
 						rootElement.setAttribute(TOKEN, emptyIfNull(RocketNotificationMainConfig.this.token));
 						rootElement.setAttribute(ICON_URL, emptyIfNull(RocketNotificationMainConfig.this.content.getIconUrl()));
 						rootElement.setAttribute(ROCKET_URL, emptyIfNull(RocketNotificationMainConfig.this.content.getRocketUrl()));
+						rootElement.setAttribute(TITLE, emptyIfNull(RocketNotificationMainConfig.this.content.getTitle()));
+						rootElement.setAttribute(EMOJI, emptyIfNull(RocketNotificationMainConfig.this.content.getEmoji()));
 						rootElement.setAttribute(BOT_NAME, emptyIfNull(RocketNotificationMainConfig.this.content.getBotName()));
                         rootElement.setAttribute(ENABLED, Boolean.toString(RocketNotificationMainConfig.this.enabled));
                         rootElement.setAttribute(TEAM_NAME, emptyIfNull(RocketNotificationMainConfig.this.teamName));
@@ -318,13 +324,13 @@ public class RocketNotificationMainConfig implements ChangeListener {
                         rootElement.removeChildren(PROXY);
                         rootElement.removeChildren("info");
 
-						if(getProxyHost() != null && getProxyHost().length() > 0
-								&& getProxyPort() != null && getProxyPort() > 0 )
-						{
-							rootElement.addContent(getProxyAsElement());
-							Loggers.SERVER.debug(RocketNotificationMainConfig.class.getName() + "writeTo :: proxyHost " + getProxyHost());
-							Loggers.SERVER.debug(RocketNotificationMainConfig.class.getName() + "writeTo :: proxyPort " + getProxyPort());
-						}
+//						if(getProxyHost() != null && getProxyHost().length() > 0
+//								&& getProxyPort() != null && getProxyPort() > 0 )
+//						{
+//							rootElement.addContent(getProxyAsElement());
+//							Loggers.SERVER.debug(RocketNotificationMainConfig.class.getName() + "writeTo :: proxyHost " + getProxyHost());
+//							Loggers.SERVER.debug(RocketNotificationMainConfig.class.getName() + "writeTo :: proxyPort " + getProxyPort());
+//						}
 
 						if(getInfoUrlAsElement() != null){
                             rootElement.addContent(getInfoUrlAsElement());
@@ -378,6 +384,14 @@ public class RocketNotificationMainConfig implements ChangeListener {
             {
                 content.setRocketUrl(slackNotificationsElement.getAttributeValue(ROCKET_URL));
             }
+			if(slackNotificationsElement.getAttribute(TITLE) != null)
+			{
+				content.setRocketUrl(slackNotificationsElement.getAttributeValue(TITLE));
+			}
+			if(slackNotificationsElement.getAttribute(EMOJI) != null)
+			{
+				content.setRocketUrl(slackNotificationsElement.getAttributeValue(EMOJI));
+			}
             if(slackNotificationsElement.getAttribute(BOT_NAME) != null)
             {
                 content.setBotName(slackNotificationsElement.getAttributeValue(BOT_NAME));
@@ -411,41 +425,41 @@ public class RocketNotificationMainConfig implements ChangeListener {
                 content.setShowFailureReason(Boolean.parseBoolean(slackNotificationsElement.getAttributeValue(SHOW_FAILURE_REASON)));
             }
 
-            Element proxyElement = slackNotificationsElement.getChild(PROXY);
-            if(proxyElement != null)
-            {
-                if (proxyElement.getAttribute("proxyShortNames") != null){
-                    setProxyShortNames(Boolean.parseBoolean(proxyElement.getAttributeValue("proxyShortNames")));
-                }
-
-                if (proxyElement.getAttribute("host") != null){
-                    setProxyHost(proxyElement.getAttributeValue("host"));
-                }
-
-                if (proxyElement.getAttribute("port") != null){
-                    setProxyPort(Integer.parseInt(proxyElement.getAttributeValue("port")));
-                }
-
-                if (proxyElement.getAttribute(USERNAME) != null){
-                    setProxyUsername(proxyElement.getAttributeValue(USERNAME));
-                }
-
-                if (proxyElement.getAttribute(PASSWORD) != null){
-                    setProxyPassword(proxyElement.getAttributeValue(PASSWORD));
-                }
-            }
-            else {
-                setProxyHost(null);
-                setProxyPort(null);
-                setProxyUsername(null);
-                setProxyPassword(null);
-            }
+//            Element proxyElement = slackNotificationsElement.getChild(PROXY);
+//            if(proxyElement != null)
+//            {
+//                if (proxyElement.getAttribute("proxyShortNames") != null){
+//                    setProxyShortNames(Boolean.parseBoolean(proxyElement.getAttributeValue("proxyShortNames")));
+//                }
+//
+//                if (proxyElement.getAttribute("host") != null){
+//                    setProxyHost(proxyElement.getAttributeValue("host"));
+//                }
+//
+//                if (proxyElement.getAttribute("port") != null){
+//                    setProxyPort(Integer.parseInt(proxyElement.getAttributeValue("port")));
+//                }
+//
+//                if (proxyElement.getAttribute(USERNAME) != null){
+//                    setProxyUsername(proxyElement.getAttributeValue(USERNAME));
+//                }
+//
+//                if (proxyElement.getAttribute(PASSWORD) != null){
+//                    setProxyPassword(proxyElement.getAttributeValue(PASSWORD));
+//                }
+//            }
+//            else {
+//                setProxyHost(null);
+//                setProxyPort(null);
+//                setProxyUsername(null);
+//                setProxyPassword(null);
+//            }
         }
     }
 
-    public SlackNotificationProxyConfig getProxyConfig() {
-        return new SlackNotificationProxyConfig(proxyHost, proxyPort, proxyUsername, proxyPassword);
-    }
+//    public SlackNotificationProxyConfig getProxyConfig() {
+//        return new SlackNotificationProxyConfig(proxyHost, proxyPort, proxyUsername, proxyPassword);
+//    }
 
     public SlackNotificationContentConfig getContent() {
         if(content == null){
@@ -453,4 +467,20 @@ public class RocketNotificationMainConfig implements ChangeListener {
         }
         return content;
     }
+//
+//	public String getTitle() {
+//		return title;
+//	}
+//
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
+//
+//	public String getEmoji() {
+//		return emoji;
+//	}
+//
+//	public void setEmoji(String emoji) {
+//		this.emoji = emoji;
+//	}
 }

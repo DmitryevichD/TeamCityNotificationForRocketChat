@@ -38,6 +38,8 @@ public class RocketNotifierSettingsController extends BaseController {
     private String token;
     private String rocketUrl;
     private String botName;
+    private String title;
+    private String emoji;
     private String iconUrl;
     private String defaultChannel;
     private String maxCommitsToDisplay;
@@ -47,10 +49,10 @@ public class RocketNotifierSettingsController extends BaseController {
     private String showTriggeredBy;
     private String showElapsedBuildTime;
     private String showFailureReason;
-    private String proxyHost;
-    private String proxyPort;
-    private String proxyUser;
-    private String proxyPassword;
+//    private String proxyHost;
+//    private String proxyPort;
+//    private String proxyUser;
+//    private String proxyPassword;
 
     private SBuildServer server;
     private ServerPaths serverPaths;
@@ -82,23 +84,23 @@ public class RocketNotifierSettingsController extends BaseController {
         HashMap<String, Object> params = new HashMap<String, Object>();
 
         if(request.getParameter(EDIT_PARAMETER) != null){
-            logger.debug("Updating configuration");
+//            logger.debug("Updating configuration");
             params = this.handleConfigurationChange(request);
         }
         else if(request.getParameter(TEST_PARAMETER) != null){
-            logger.debug("Sending test notification");
+//            logger.debug("Sending test notification");
             params = this.handleTestNotification(request);
         } else if (request.getParameter(ACTION_PARAMETER) != null) {
-            logger.debug("Changing plugin status");
+//            logger.debug("Changing plugin status");
             this.handlePluginStatusChange(request);
         }
         return new ModelAndView(descriptor.getPluginResourcesPath() + "RocketNotification/ajaxEdit.jsp", params);
     }
 
     private void handlePluginStatusChange(HttpServletRequest request) {
-        logger.debug("Changing status");
+//        logger.debug("Changing status");
         Boolean disabled = !request.getParameter(ACTION_PARAMETER).equals(ACTION_ENABLE);
-        logger.debug(String.format("Disabled status: %s", disabled));
+//        logger.debug(String.format("Disabled status: %s", disabled));
         this.config.setEnabled(!disabled);
         this.config.save();
     }
@@ -108,6 +110,8 @@ public class RocketNotifierSettingsController extends BaseController {
         token = request.getParameter("token");
         rocketUrl = request.getParameter("rocketUrl");
         botName = request.getParameter("botName");
+        title = request.getParameter("title");
+        emoji = request.getParameter("emoji");
         iconUrl = request.getParameter("iconUrl");
         defaultChannel = request.getParameter("defaultChannel");
         maxCommitsToDisplay = request.getParameter("maxCommitsToDisplay");
@@ -117,17 +121,17 @@ public class RocketNotifierSettingsController extends BaseController {
         showTriggeredBy = request.getParameter("showTriggeredBy");
         showElapsedBuildTime = request.getParameter("showElapsedBuildTime");
         showFailureReason = request.getParameter("showFailureReason");
-        proxyHost = request.getParameter("proxyHost");
-        proxyPort = request.getParameter("proxyPort");
-        proxyUser = request.getParameter("proxyUser");
-        proxyPassword = request.getParameter("proxyPassword");
+//        proxyHost = request.getParameter("proxyHost");
+//        proxyPort = request.getParameter("proxyPort");
+//        proxyUser = request.getParameter("proxyUser");
+//        proxyPassword = request.getParameter("proxyPassword");
     }
 
     private HashMap<String, Object> handleTestNotification(HttpServletRequest request) throws IOException, SlackConfigValidationException {
         setRequestParams(request);
         HashMap<String, Object> params = new HashMap<String, Object>();
 
-        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
+        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, rocketUrl, title);
 
         SlackNotification notification = createMockNotification(teamName, defaultChannel, botName,
                 token, iconUrl, Integer.parseInt(maxCommitsToDisplay),
@@ -136,8 +140,10 @@ public class RocketNotifierSettingsController extends BaseController {
                 Boolean.parseBoolean(showCommits),
                 Boolean.parseBoolean(showCommitters),
                 Boolean.parseBoolean(showTriggeredBy),
-                Boolean.parseBoolean(showFailureReason),
-                proxyHost, proxyPort, proxyUser, proxyPassword);
+                Boolean.parseBoolean(showFailureReason));
+        notification.setRocketUrl(rocketUrl);
+        notification.setTitle(title);
+        notification.setEmoji(emoji);
 
 
 
@@ -152,18 +158,19 @@ public class RocketNotifierSettingsController extends BaseController {
     }
 
     private void Validate(String teamName, String token, String botName, String iconUrl, String defaultChannel
-            , String maxCommitsToDisplay, String showBuildAgent, String proxyHost, String proxyPort, String proxyUser, String proxyPassword, String rocketUrl) throws SlackConfigValidationException {
+            , String maxCommitsToDisplay, String showBuildAgent, String rocketUrl, String title) throws SlackConfigValidationException {
         if(teamName == null || StringUtil.isEmpty(teamName)
                 || token == null || StringUtil.isEmpty(token)
                 || rocketUrl == null || StringUtil.isEmpty(rocketUrl)
+                || title == null || StringUtil.isEmpty(title)
                 || botName == null || StringUtil.isEmpty(botName)
                 || iconUrl == null || StringUtil.isEmpty(iconUrl)
                 || defaultChannel == null || StringUtil.isEmpty(defaultChannel)
                 || (showBuildAgent.toLowerCase() == "false" && (maxCommitsToDisplay == null || StringUtil.isEmpty(maxCommitsToDisplay)))
                 || tryParseInt(maxCommitsToDisplay) == null
-                || (!isNullOrEmpty(proxyHost) && isNullOrEmpty(proxyPort))
-                || (!isNullOrEmpty(proxyUser) && isNullOrEmpty(proxyPassword))
-                || (!isNullOrEmpty(proxyPort) && tryParseInt(proxyPort) == null)
+//                || (!isNullOrEmpty(proxyHost) && isNullOrEmpty(proxyPort))
+//                || (!isNullOrEmpty(proxyUser) && isNullOrEmpty(proxyPassword))
+//                || (!isNullOrEmpty(proxyPort) && tryParseInt(proxyPort) == null)
                 ){
 
             throw new SlackConfigValidationException("Could not validate parameters. Please recheck the request.");
@@ -177,8 +184,10 @@ public class RocketNotifierSettingsController extends BaseController {
     public SlackNotification createMockNotification(String teamName, String defaultChannel, String botName,
                                                     String token, String iconUrl, Integer maxCommitsToDisplay,
                                                     Boolean showElapsedBuildTime, Boolean showBuildAgent, Boolean showCommits,
-                                                    Boolean showCommitters, Boolean showTriggeredBy, Boolean showFailureReason, String proxyHost,
-                                                    String proxyPort, String proxyUser, String proxyPassword) {
+                                                    Boolean showCommitters, Boolean showTriggeredBy, Boolean showFailureReason) {
+
+//    , String proxyHost,
+//                                                    String proxyPort, String proxyUser, String proxyPassword) {
         SlackNotification notification = new SlackNotificationImpl(defaultChannel);
         notification.setTeamName(teamName);
         notification.setBotName(botName);
@@ -191,14 +200,14 @@ public class RocketNotifierSettingsController extends BaseController {
         notification.setShowCommitters(showCommitters);
         notification.setShowTriggeredBy(showTriggeredBy);
         notification.setShowFailureReason(showFailureReason);
-
-        if(proxyHost != null && !StringUtil.isEmpty(proxyHost)){
-            Credentials creds = null;
-            if(proxyUser != null && !StringUtil.isEmpty(proxyUser)){
-                creds = new UsernamePasswordCredentials(proxyUser, proxyPassword);
-            }
-            notification.setProxy(proxyHost, Integer.parseInt(proxyPort), creds);
-        }
+//
+//        if(proxyHost != null && !StringUtil.isEmpty(proxyHost)){
+//            Credentials creds = null;
+//            if(proxyUser != null && !StringUtil.isEmpty(proxyUser)){
+//                creds = new UsernamePasswordCredentials(proxyUser, proxyPassword);
+//            }
+//            notification.setProxy(proxyHost, Integer.parseInt(proxyPort), creds);
+//        }
 
         SlackNotificationPayloadContent payload = new SlackNotificationPayloadContent();
         payload.setAgentName("Build Agent 1");
@@ -240,18 +249,20 @@ public class RocketNotifierSettingsController extends BaseController {
 
     private HashMap<String, Object> handleConfigurationChange(HttpServletRequest request) throws IOException, SlackConfigValidationException {
         setRequestParams(request);
-        if(!isNullOrEmpty(proxyPassword)){
-            proxyPassword = RSACipher.decryptWebRequestData(proxyPassword);
-        }
+//        if(!isNullOrEmpty(proxyPassword)){
+//            proxyPassword = RSACipher.decryptWebRequestData(proxyPassword);
+//        }
 
         Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay,
-                showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
+                showBuildAgent, rocketUrl, title);
 
         this.config.setTeamName(teamName);
         this.config.setToken(token);
         this.config.getContent().setBotName(botName);
         this.config.getContent().setIconUrl(iconUrl);
         this.config.getContent().setRocketUrl(rocketUrl);
+        this.config.getContent().setTitle(title);
+        this.config.getContent().setEmoji(emoji);
         this.config.setDefaultChannel(defaultChannel);
         this.config.getContent().setMaxCommitsToDisplay(Integer.parseInt(maxCommitsToDisplay));
         this.config.getContent().setShowBuildAgent(Boolean.parseBoolean(showBuildAgent));
@@ -261,11 +272,11 @@ public class RocketNotifierSettingsController extends BaseController {
         this.config.getContent().setShowElapsedBuildTime((Boolean.parseBoolean(showElapsedBuildTime)));
         this.config.getContent().setShowFailureReason((Boolean.parseBoolean(showFailureReason)));
 
-
-        this.config.setProxyHost(proxyHost);
-        this.config.setProxyPort(isNullOrEmpty(proxyPort) ? null : Integer.parseInt(proxyPort));
-        this.config.setProxyUsername(proxyUser);
-        this.config.setProxyPassword(proxyPassword);
+//
+//        this.config.setProxyHost(proxyHost);
+//        this.config.setProxyPort(isNullOrEmpty(proxyPort) ? null : Integer.parseInt(proxyPort));
+//        this.config.setProxyUsername(proxyUser);
+//        this.config.setProxyPassword(proxyPassword);
 
 
         this.config.save();

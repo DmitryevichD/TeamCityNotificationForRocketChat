@@ -36,6 +36,10 @@ public interface SlackNotification {
 
     public abstract void setToken(String token);
 
+	public abstract String getEmoji();
+
+	public abstract void setEmoji(String emoji);
+
     public abstract String getBotName();
 
     public abstract void setBotName(String botName);
@@ -47,6 +51,10 @@ public interface SlackNotification {
     public abstract String getRocketUrl();
 
     public abstract void setRocketUrl(String rocketUrl);
+
+	public abstract String getTitle();
+
+	public abstract void setTitle(String title);
 
 	public abstract String getParameterisedUrl();
 

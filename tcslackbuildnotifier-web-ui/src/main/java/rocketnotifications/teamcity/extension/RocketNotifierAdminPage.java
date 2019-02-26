@@ -7,6 +7,7 @@ import jetbrains.buildServer.web.openapi.PagePlaces;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
 import jetbrains.buildServer.web.openapi.PositionConstraint;
 import org.jetbrains.annotations.NotNull;
+import rocketnotifications.SlackNotificationProxyConfig;
 import rocketnotifications.teamcity.Loggers;
 import rocketnotifications.teamcity.settings.RocketNotificationMainSettings;
 
@@ -60,6 +61,8 @@ public class RocketNotifierAdminPage extends AdminPage {
         model.put("botName", this.slackMainSettings.getBotName());
         model.put("iconUrl", this.slackMainSettings.getIconUrl());
         model.put("rocketUrl", this.slackMainSettings.getRocketUrl());
+        model.put("title", this.slackMainSettings.getTitle());
+        model.put("emoji", this.slackMainSettings.getEmoji());
         model.put("defaultChannel", this.slackMainSettings.getDefaultChannel());
         model.put("maxCommitsToDisplay", this.slackMainSettings.getMaxCommitsToDisplay());
         model.put("showBuildAgent", this.slackMainSettings.getShowBuildAgent());

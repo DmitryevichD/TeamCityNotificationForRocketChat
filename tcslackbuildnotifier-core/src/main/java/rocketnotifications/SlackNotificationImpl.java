@@ -74,6 +74,8 @@ public class SlackNotificationImpl implements SlackNotification {
     private boolean mentionHereEnabled;
     private boolean mentionWhoTriggeredEnabled;
     private boolean showFailureReason;
+    private String title;
+    private String emoji;
 
 /*	This is a bit mask of states that should trigger a RocketNotification.
  *  All ones (11111111) means that all states will trigger the rocketnotifications
@@ -754,5 +756,25 @@ public class SlackNotificationImpl implements SlackNotification {
                 TimeUnit.SECONDS.toSeconds(seconds) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(seconds))
         );
+    }
+
+    @Override
+    public String getEmoji() {
+        return emoji;
+    }
+
+    @Override
+    public void setEmoji(String emoji) {
+        this.emoji = emoji;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
