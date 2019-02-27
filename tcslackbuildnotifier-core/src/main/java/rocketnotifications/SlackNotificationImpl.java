@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jetbrains.buildServer.util.StringUtil;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -12,11 +13,14 @@ import org.apache.http.auth.Credentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.HttpHost;
 import rocketnotifications.teamcity.BuildState;
@@ -227,9 +231,10 @@ public class SlackNotificationImpl implements SlackNotification {
 //        HttpPost httppost = new HttpPost("https://openbank-rc.cherashev.com/api/v1/chat.postMessage");
         HttpPost httppost = new HttpPost(url);
 
+
         httppost.setHeader("X-Auth-Token", this.token);
         httppost.setHeader("X-User-Id", this.teamName);
-        httppost.setHeader("Content-type", "application/json");
+        httppost.setHeader("Content-type", "application/json; charset=utf-8");
 
         List<Attachment> attachments = getAttachments();
 
@@ -252,7 +257,8 @@ public class SlackNotificationImpl implements SlackNotification {
 
 //        attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
 //        String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.getBotName() + "\", " + attachmentsParam + "}";
-        httppost.setEntity(new StringEntity(gson.toJson(msg)));
+        HttpEntity ent = new StringEntity(gson.toJson(msg), "UTF-8");
+        httppost.setEntity(ent);
 
 
         try {
