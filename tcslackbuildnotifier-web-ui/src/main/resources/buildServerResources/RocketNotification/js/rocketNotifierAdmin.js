@@ -6,6 +6,7 @@ var RocketNotifierAdmin = {
             var token = document.forms["slackNotifierAdminForm"]["token"].value;
             var iconUrl = document.forms["slackNotifierAdminForm"]["iconUrl"].value;
             var rocketUrl = document.forms["slackNotifierAdminForm"]["rocketUrl"].value;
+            var titleText = document.forms["slackNotifierAdminForm"]["titleText"].value;
             var botName = document.forms["slackNotifierAdminForm"]["botName"].value;
             var maxCommitsToDisplay = document.forms["slackNotifierAdminForm"]["maxCommitsToDisplay"].value;
             var showCommits = document.forms["slackNotifierAdminForm"]["showCommits"].checked;
@@ -29,6 +30,9 @@ var RocketNotifierAdmin = {
             }
             if(!botName){
                 errors.push("Bot name is required.");
+            }
+            if(!titleText){
+                errors.push("Title is required.");
             }
             // if(proxyHost && !proxyPort){
             //     errors.push("Proxy port is required if a host is specified.");
@@ -85,6 +89,8 @@ var RocketNotifierAdmin = {
                     token: $("token").value,
                     botName: $("botName").value,
                     iconUrl: $("iconUrl").value,
+                    titleText: $("titleText").value,
+                    emoji: $("emoji").value,
                     maxCommitsToDisplay: $("maxCommitsToDisplay").value,
                     showCommits: $("showCommits").checked,
                     showCommitters: $("showCommitters").checked,
@@ -122,6 +128,8 @@ var RocketNotifierAdmin = {
                     defaultChannel: $("defaultChannel").value,
                     token: $("token").value,
                     botName: $("botName").value,
+                    titleText: $("titleText").value,
+                    emoji: $("emoji").value,
                     iconUrl: $("iconUrl").value,
                     maxCommitsToDisplay: $("maxCommitsToDisplay").value,
                     showCommits: $("showCommits").checked,

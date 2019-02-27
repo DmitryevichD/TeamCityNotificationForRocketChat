@@ -60,6 +60,8 @@ public class RocketNotifierAdminPage extends AdminPage {
         model.put("botName", this.slackMainSettings.getBotName());
         model.put("iconUrl", this.slackMainSettings.getIconUrl());
         model.put("rocketUrl", this.slackMainSettings.getRocketUrl());
+        model.put("titleText", this.slackMainSettings.getTitleText());
+        model.put("emoji", this.slackMainSettings.getEmoji());
         model.put("defaultChannel", this.slackMainSettings.getDefaultChannel());
         model.put("maxCommitsToDisplay", this.slackMainSettings.getMaxCommitsToDisplay());
         model.put("showBuildAgent", this.slackMainSettings.getShowBuildAgent());

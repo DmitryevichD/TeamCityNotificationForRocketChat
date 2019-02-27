@@ -1,6 +1,8 @@
 package rocketnotifications;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jetbrains.buildServer.util.StringUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -26,6 +28,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,6 +77,8 @@ public class SlackNotificationImpl implements SlackNotification {
     private boolean mentionHereEnabled;
     private boolean mentionWhoTriggeredEnabled;
     private boolean showFailureReason;
+    private String titleText;
+    private String emoji;
 
 /*	This is a bit mask of states that should trigger a RocketNotification.
  *  All ones (11111111) means that all states will trigger the rocketnotifications
@@ -209,10 +214,18 @@ public class SlackNotificationImpl implements SlackNotification {
         }
     }
 
+    private String convertToUtf(String string) {
+//        try {
+            return string == null ? "" : string;
+//        } catch (UnsupportedEncodingException ex) {
+//            return "";
+//        }
+    }
+
     public void postReactChat() throws IOException  {
-//        String url = this.getRocketUrl() + CHAT_MESSAGE_API;
-        HttpPost httppost = new HttpPost("https://openbank-rc.cherashev.com/api/v1/chat.postMessage");
-//        HttpPost httppost = new HttpPost(url);
+        String url = this.getRocketUrl() + CHAT_MESSAGE_API;
+//        HttpPost httppost = new HttpPost("https://openbank-rc.cherashev.com/api/v1/chat.postMessage");
+        HttpPost httppost = new HttpPost(url);
 
         httppost.setHeader("X-Auth-Token", this.token);
         httppost.setHeader("X-User-Id", this.teamName);
@@ -220,12 +233,26 @@ public class SlackNotificationImpl implements SlackNotification {
 
         List<Attachment> attachments = getAttachments();
 
-        String attachmentsParam = "";
+        Message msg = Message.builder()
+                .channel(convertToUtf(this.channel))
+                .avatar(convertToUtf(this.iconUrl))
+                .alias(convertToUtf(this.botName))
+                .text(convertToUtf(this.titleText))
+                .emoji(convertToUtf(this.emoji))
+                .attachments(attachments)
+                .build();
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
 
 
-        attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
-        String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.getBotName() + "\", " + attachmentsParam + "}";
-        httppost.setEntity(new StringEntity(body));
+//        String attachmentsParam = "";
+
+
+//        attachmentsParam = String.format("\"attachments\":%s", convertAttachmentsToJson(attachments), UTF8);
+//        String body = "{\"channel\": \"" + this.channel + "\", \"alias\":  \"" + this.getBotName() + "\", " + attachmentsParam + "}";
+        httppost.setEntity(new StringEntity(gson.toJson(msg)));
 
 
         try {
@@ -307,6 +334,9 @@ public class SlackNotificationImpl implements SlackNotification {
     private List<Attachment> getAttachments() {
         List<Attachment> attachments = new ArrayList<Attachment>();
         Attachment attachment = new Attachment(this.payload.getBuildName(), null, null, this.payload.getColor());
+
+        attachment.setTitle(convertToUtf(payload.getBuildDescriptionWithLinkSyntax()));
+        attachment.setTitleLink(convertToUtf(payload.getBuildStatusUrl()));
 
         List<String> firstDetailLines = new ArrayList<String>();
         if(showBuildAgent == null || showBuildAgent){
@@ -754,5 +784,25 @@ public class SlackNotificationImpl implements SlackNotification {
                 TimeUnit.SECONDS.toSeconds(seconds) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(seconds))
         );
+    }
+
+    @Override
+    public String getTitleText() {
+        return titleText;
+    }
+
+    @Override
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
+    }
+
+    @Override
+    public String getEmoji() {
+        return emoji;
+    }
+
+    @Override
+    public void setEmoji(String emoji) {
+        this.emoji = emoji;
     }
 }

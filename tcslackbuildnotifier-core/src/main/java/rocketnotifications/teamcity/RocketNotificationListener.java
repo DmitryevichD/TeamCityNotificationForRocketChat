@@ -69,6 +69,8 @@ public class RocketNotificationListener extends BuildServerAdapter {
         slackNotification.setToken(StringUtil.isEmpty(slackNotificationConfig.getToken()) ? myMainSettings.getToken() : slackNotificationConfig.getToken());
         slackNotification.setIconUrl(myMainSettings.getIconUrl());
         slackNotification.setRocketUrl(myMainSettings.getRocketUrl());
+        slackNotification.setTitleText(myMainSettings.getTitleText());
+        slackNotification.setEmoji(myMainSettings.getEmoji());
         slackNotification.setBotName(myMainSettings.getBotName());
 		slackNotification.setEnabled(myMainSettings.getEnabled() && slackNotificationConfig.getEnabled());
 		slackNotification.setBuildStates(slackNotificationConfig.getBuildStates());

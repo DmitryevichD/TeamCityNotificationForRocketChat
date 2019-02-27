@@ -13,6 +13,8 @@ public class SlackNotificationContentConfig {
     public static final boolean DEFAULT_SHOW_FAILURE_REASON = false;
     private String iconUrl = RocketNotificationMainConfig.DEFAULT_ICONURL;
     private String rocketUrl;
+    private String titleText;
+    private String emoji = RocketNotificationMainConfig.DEFAULT_EMOJI;
     private String botName = RocketNotificationMainConfig.DEFAULT_BOTNAME;
     private Boolean showBuildAgent;
     private Boolean showElapsedBuildTime;
@@ -39,6 +41,21 @@ public class SlackNotificationContentConfig {
         this.rocketUrl = rocketUrl;
     }
 
+    public String getTitleText() {
+        return titleText;
+    }
+
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
+    }
+
+    public String getEmoji() {
+        return emoji;
+    }
+
+    public void setEmoji(String emoji) {
+        this.emoji = emoji;
+    }
     public String getBotName() {
         return botName;
     }

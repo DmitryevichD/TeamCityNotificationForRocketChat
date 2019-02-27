@@ -1,17 +1,22 @@
 package rocketnotifications;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Peter on 3/06/2014.
+ * Attachment for rocket notification
  */
+@Data
 public class Attachment {
+    private String fallback;
     private String text;
     private String pretext;
     private String color;
-
-    private List<Field> fields;
+    private String title;
+    private String titleLink;
+    private List<Field> fields = new ArrayList<>();
 
     public Attachment(String fallback, String text, String pretext, String color) {
         this.fallback = fallback;
@@ -21,29 +26,7 @@ public class Attachment {
         this.fields = new ArrayList<Field>();
     }
 
-    public void addField(String title, String value, boolean isShort) {
+    void addField(String title, String value, boolean isShort) {
         this.fields.add(new Field(title, value, isShort));
-    }
-
-    public String getFallback() {
-        return fallback;
-    }
-
-    private String fallback;
-
-    public String getText() {
-        return text;
-    }
-
-    public String getPretext() {
-        return pretext;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public List<Field> getFields() {
-        return fields;
     }
 }

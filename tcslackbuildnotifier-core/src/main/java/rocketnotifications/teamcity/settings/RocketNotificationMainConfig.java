@@ -16,7 +16,8 @@ import java.io.IOException;
 
 public class RocketNotificationMainConfig implements ChangeListener {
     public static final String DEFAULT_BOTNAME = "TeamCity";
-    public static final String DEFAULT_ICONURL = "https://raw.githubusercontent.com/PeteGoo/tcSlackBuildNotifier/master/docs/TeamCity72x72.png";
+    public static final String DEFAULT_ICONURL = "http://res.guggy.com/logo_128.png";
+    public static final String DEFAULT_EMOJI = ":smirk:";
 	private static final String TOKEN = "token";
 	private static final String DEFAULT_CHANNEL = "defaultChannel";
 	private static final String ICON_URL = "iconurl";
@@ -36,6 +37,8 @@ public class RocketNotificationMainConfig implements ChangeListener {
 	private static final String PASSWORD = "password";
 	private static final String ENABLED = "enabled";
 	private static final String TEAM_NAME = "teamName";
+	private static final String TITLE_TEXT = "titleText";
+	private static final String EMOJI = "emoji";
 
 
     private final FileWatcher myChangeObserver;
@@ -286,6 +289,8 @@ public class RocketNotificationMainConfig implements ChangeListener {
 						rootElement.setAttribute(TOKEN, emptyIfNull(RocketNotificationMainConfig.this.token));
 						rootElement.setAttribute(ICON_URL, emptyIfNull(RocketNotificationMainConfig.this.content.getIconUrl()));
 						rootElement.setAttribute(ROCKET_URL, emptyIfNull(RocketNotificationMainConfig.this.content.getRocketUrl()));
+						rootElement.setAttribute(TITLE_TEXT, emptyIfNull(RocketNotificationMainConfig.this.content.getTitleText()));
+						rootElement.setAttribute(EMOJI, emptyIfNull(RocketNotificationMainConfig.this.content.getEmoji()));
 						rootElement.setAttribute(BOT_NAME, emptyIfNull(RocketNotificationMainConfig.this.content.getBotName()));
                         rootElement.setAttribute(ENABLED, Boolean.toString(RocketNotificationMainConfig.this.enabled));
                         rootElement.setAttribute(TEAM_NAME, emptyIfNull(RocketNotificationMainConfig.this.teamName));
@@ -378,6 +383,14 @@ public class RocketNotificationMainConfig implements ChangeListener {
             {
                 content.setRocketUrl(slackNotificationsElement.getAttributeValue(ROCKET_URL));
             }
+			if(slackNotificationsElement.getAttribute(TITLE_TEXT) != null)
+			{
+				content.setTitleText(slackNotificationsElement.getAttributeValue(TITLE_TEXT));
+			}
+			if(slackNotificationsElement.getAttribute(EMOJI) != null)
+			{
+				content.setEmoji(slackNotificationsElement.getAttributeValue(EMOJI));
+			}
             if(slackNotificationsElement.getAttribute(BOT_NAME) != null)
             {
                 content.setBotName(slackNotificationsElement.getAttributeValue(BOT_NAME));

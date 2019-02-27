@@ -37,6 +37,8 @@ public class RocketNotifierSettingsController extends BaseController {
     private String teamName;
     private String token;
     private String rocketUrl;
+    private String titleText;
+    private String emoji;
     private String botName;
     private String iconUrl;
     private String defaultChannel;
@@ -107,6 +109,8 @@ public class RocketNotifierSettingsController extends BaseController {
         teamName = request.getParameter("teamName");
         token = request.getParameter("token");
         rocketUrl = request.getParameter("rocketUrl");
+        titleText = request.getParameter("titleText");
+        emoji = request.getParameter("emoji");
         botName = request.getParameter("botName");
         iconUrl = request.getParameter("iconUrl");
         defaultChannel = request.getParameter("defaultChannel");
@@ -127,7 +131,7 @@ public class RocketNotifierSettingsController extends BaseController {
         setRequestParams(request);
         HashMap<String, Object> params = new HashMap<String, Object>();
 
-        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
+        Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay, showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl, titleText);
 
         SlackNotification notification = createMockNotification(teamName, defaultChannel, botName,
                 token, iconUrl, Integer.parseInt(maxCommitsToDisplay),
@@ -137,9 +141,7 @@ public class RocketNotifierSettingsController extends BaseController {
                 Boolean.parseBoolean(showCommitters),
                 Boolean.parseBoolean(showTriggeredBy),
                 Boolean.parseBoolean(showFailureReason),
-                proxyHost, proxyPort, proxyUser, proxyPassword);
-
-
+                proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl, titleText, emoji);
 
         notification.post();
 
@@ -152,10 +154,11 @@ public class RocketNotifierSettingsController extends BaseController {
     }
 
     private void Validate(String teamName, String token, String botName, String iconUrl, String defaultChannel
-            , String maxCommitsToDisplay, String showBuildAgent, String proxyHost, String proxyPort, String proxyUser, String proxyPassword, String rocketUrl) throws SlackConfigValidationException {
+            , String maxCommitsToDisplay, String showBuildAgent, String proxyHost, String proxyPort, String proxyUser, String proxyPassword, String rocketUrl, String titleText) throws SlackConfigValidationException {
         if(teamName == null || StringUtil.isEmpty(teamName)
                 || token == null || StringUtil.isEmpty(token)
                 || rocketUrl == null || StringUtil.isEmpty(rocketUrl)
+                || titleText == null || StringUtil.isEmpty(titleText)
                 || botName == null || StringUtil.isEmpty(botName)
                 || iconUrl == null || StringUtil.isEmpty(iconUrl)
                 || defaultChannel == null || StringUtil.isEmpty(defaultChannel)
@@ -178,10 +181,14 @@ public class RocketNotifierSettingsController extends BaseController {
                                                     String token, String iconUrl, Integer maxCommitsToDisplay,
                                                     Boolean showElapsedBuildTime, Boolean showBuildAgent, Boolean showCommits,
                                                     Boolean showCommitters, Boolean showTriggeredBy, Boolean showFailureReason, String proxyHost,
-                                                    String proxyPort, String proxyUser, String proxyPassword) {
+                                                    String proxyPort, String proxyUser, String proxyPassword, String rocketUrl,
+                                                    String titleText, String emoji) {
         SlackNotification notification = new SlackNotificationImpl(defaultChannel);
         notification.setTeamName(teamName);
         notification.setBotName(botName);
+        notification.setTitleText(titleText);
+        notification.setRocketUrl(rocketUrl);
+        notification.setEmoji(emoji);
         notification.setToken(token);
         notification.setIconUrl(iconUrl);
         notification.setMaxCommitsToDisplay(maxCommitsToDisplay);
@@ -245,11 +252,13 @@ public class RocketNotifierSettingsController extends BaseController {
         }
 
         Validate(teamName, token, botName, iconUrl, defaultChannel, maxCommitsToDisplay,
-                showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl);
+                showBuildAgent, proxyHost, proxyPort, proxyUser, proxyPassword, rocketUrl, titleText);
 
         this.config.setTeamName(teamName);
         this.config.setToken(token);
         this.config.getContent().setBotName(botName);
+        this.config.getContent().setTitleText(titleText);
+        this.config.getContent().setEmoji(emoji);
         this.config.getContent().setIconUrl(iconUrl);
         this.config.getContent().setRocketUrl(rocketUrl);
         this.config.setDefaultChannel(defaultChannel);

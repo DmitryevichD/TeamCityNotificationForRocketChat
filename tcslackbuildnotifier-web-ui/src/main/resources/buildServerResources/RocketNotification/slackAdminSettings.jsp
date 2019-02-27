@@ -67,6 +67,23 @@
                         <span class="smallNote">The name that will be displayed by your bot messages. Mostly you can leave this as <b>TeamCity</b></span>
                     </td>
                 </tr>
+              <tr>
+                  <th>
+                      <label for="titleText">Title: <l:star /></label>
+                  </th>
+                  <td>
+                      <forms:textField name="titleText" value="${titleText}" style="width: 300px;" />
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      <label for="emoji">Emoji: /label>
+                  </th>
+                  <td>
+                      <forms:textField name="emoji" value="${emoji}" style="width: 300px;" />
+                      <span class="smallNote">;)</span>
+                  </td>
+              </tr>
                 <tr>
                     <th>
                         <label for="iconUrl">Icon url: <l:star /></label>

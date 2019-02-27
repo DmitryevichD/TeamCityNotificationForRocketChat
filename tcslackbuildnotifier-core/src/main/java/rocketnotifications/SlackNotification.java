@@ -28,25 +28,25 @@ public interface SlackNotification {
 
 	public abstract void setChannel(String channel);
 
-    public abstract String getTeamName();
+	public abstract String getTeamName();
 
-    public abstract void setTeamName(String teamName);
+	public abstract void setTeamName(String teamName);
 
-    public abstract String getToken();
+	public abstract String getToken();
 
-    public abstract void setToken(String token);
+	public abstract void setToken(String token);
 
-    public abstract String getBotName();
+	public abstract String getBotName();
 
-    public abstract void setBotName(String botName);
+	public abstract void setBotName(String botName);
 
-    public abstract String getIconUrl();
+	public abstract String getIconUrl();
 
-    public abstract void setIconUrl(String iconUrl);
+	public abstract void setIconUrl(String iconUrl);
 
-    public abstract String getRocketUrl();
+	public abstract String getRocketUrl();
 
-    public abstract void setRocketUrl(String rocketUrl);
+	public abstract void setRocketUrl(String rocketUrl);
 
 	public abstract String getParameterisedUrl();
 
@@ -97,27 +97,35 @@ public interface SlackNotification {
 
 	public abstract void setPayload(SlackNotificationPayloadContent payloadContent);
 
-    public abstract PostMessageResponse getResponse();
+	public abstract PostMessageResponse getResponse();
 
-    public abstract void setShowBuildAgent(Boolean showBuildAgent);
+	public abstract void setShowBuildAgent(Boolean showBuildAgent);
 
-    public abstract void setShowElapsedBuildTime(Boolean showElapsedBuildTime);
+	public abstract void setShowElapsedBuildTime(Boolean showElapsedBuildTime);
 
-    public abstract void setShowCommits(boolean showCommits);
+	public abstract void setShowCommits(boolean showCommits);
 
-    public abstract void setShowCommitters(boolean showCommitters);
+	public abstract void setShowCommitters(boolean showCommitters);
 
 	public abstract void setShowTriggeredBy(boolean showTriggeredBy);
 
-    public abstract void setMaxCommitsToDisplay(int maxCommitsToDisplay);
+	public abstract void setMaxCommitsToDisplay(int maxCommitsToDisplay);
 
-    public abstract void setMentionChannelEnabled(boolean mentionChannelEnabled);
+	public abstract void setMentionChannelEnabled(boolean mentionChannelEnabled);
 
 	public abstract void setMentionSlackUserEnabled(boolean mentionSlackUserEnabled);
 
 	public abstract void setMentionHereEnabled(boolean mentionHereEnabled);
 
-    public abstract void setShowFailureReason(boolean showFailureReason);
+	public abstract void setShowFailureReason(boolean showFailureReason);
 
 	public abstract void setMentionWhoTriggeredEnabled(boolean mentionWhoTriggeredEnabled);
+
+	public abstract String getTitleText();
+
+	public abstract void setTitleText(String titleText);
+
+	public abstract String getEmoji();
+
+	public abstract void setEmoji(String emoji);
 }

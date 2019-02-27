@@ -108,6 +108,16 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
         return this.slackNotificationMainConfig.getContent().getRocketUrl();
     }
 
+    public String getTitleText()
+    {
+        return this.slackNotificationMainConfig.getContent().getTitleText();
+    }
+
+    public String getEmoji()
+    {
+        return this.slackNotificationMainConfig.getContent().getEmoji();
+    }
+
     public String getBotName()
     {
         return this.slackNotificationMainConfig.getContent().getBotName();
