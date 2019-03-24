@@ -32,7 +32,7 @@ public final class NotificationUtility {
                     Loggers.SERVER.error(notification.getErrorReason());
                 }
                 if ((notification.getStatus() == null || notification.getStatus() > HttpStatus.SC_OK))
-                    Loggers.ACTIVITIES.warn("SlackNotificationListener :: " + notification.getParam("projectId") + " RocketNotification (url: " + notification.getChannel() + " proxy: " + notification.getProxyHost() + ":" + notification.getProxyPort()+") returned HTTP status " + notification.getStatus().toString());
+                    Loggers.ACTIVITIES.warn("SlackNotificationListener :: " + notification.getParam("projectId") + " RocketNotification (url: " + notification.getChannel() + ") returned HTTP status " + notification.getStatus().toString());
 
             } else {
                 Loggers.SERVER.debug("RocketNotification NOT triggered: "

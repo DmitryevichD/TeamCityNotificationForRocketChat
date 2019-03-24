@@ -22,8 +22,8 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static rocketnotifications.teamcity.RocketNotificationListener.ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME;
 
-public class SlackNotificationMockingFrameworkImpl implements SlackNotificationMockingFramework {
-	
+public class RocketNotificationMockingFrameworkImpl implements RocketNotificationMockingFramework {
+
 	SlackNotificationPayloadContent content;
 	SlackNotificationConfig slackNotificationConfig;
 	SBuildServer sBuildServer = mock(SBuildServer.class);
@@ -49,14 +49,14 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 	SProject sProject = new MockSProject("Test Project", "A test project", "project1", "ATestProject", sBuildType);
 	SProject sProject02 = new MockSProject("Test Project 02", "A test project 02", "project2", "TestProjectNumber02", sBuildType);
 	SProject sProject03 = new MockSProject("Test Project 03", "A test sub project 03", "project3", "TestProjectNumber02_TestProjectNumber03", sBuildType);
-	
+
 	SBuildType build2 = mock(SBuildType.class);
 	SBuildType build3 = mock(SBuildType.class);
-	
+
 	RocketNotificationListener whl;
 	BuildStateEnum buildstateEnum;
-	
-	private SlackNotificationMockingFrameworkImpl() {
+
+	private RocketNotificationMockingFrameworkImpl() {
 		slackNotificationImpl = new SlackNotificationImpl();
 		spySlackNotification = spy(slackNotificationImpl);
 		whl = new RocketNotificationListener(sBuildServer, settings, configSettings, manager, factory);
@@ -77,7 +77,7 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 		finishedFailedBuilds.add(previousFailedBuild);
 		((MockSBuildType) sBuildType).setProject(sProject);
 		when(settings.getSettings(sRunningBuild.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME)).thenReturn(projSettings);
-		
+
 		when(build2.getBuildTypeId()).thenReturn("bt2");
 		when(build2.getInternalId()).thenReturn("bt2");
 		when(build2.getName()).thenReturn("This is Build 2");
@@ -91,11 +91,11 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 		((MockSProject) sProject03).setParentProject(sProject02);
 		((MockSProject) sProject02).addChildProjectToMock(sProject03);
 		whl.register();
-		
+
 	}
 
-	public static SlackNotificationMockingFramework create(BuildStateEnum buildState) {
-		SlackNotificationMockingFrameworkImpl framework = new SlackNotificationMockingFrameworkImpl();
+	public static RocketNotificationMockingFramework create(BuildStateEnum buildState) {
+		RocketNotificationMockingFrameworkImpl framework = new RocketNotificationMockingFrameworkImpl();
 		framework.buildstateEnum = buildState;
 		framework.content = new SlackNotificationPayloadContent(framework.sBuildServer, framework.sRunningBuild, framework.previousSuccessfulBuild, buildState);
 		return framework;
@@ -107,30 +107,8 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 	}
 
 	@Override
-	public SRunningBuild getRunningBuild() {
-		return sRunningBuild;
-	}
-	
-	@Override
-	public SlackNotificationPayloadContent getSlackNotificationContent() {
-		return content;
-	}
-
-	@Override
-	public void loadSlackNotificationConfigXml(File xmlConfigFile) throws JDOMException, IOException {
-		slackNotificationConfig = ConfigLoaderUtil.getFirstSlackNotificationInConfig(xmlConfigFile);
-		this.content = new SlackNotificationPayloadContent(this.sBuildServer, this.sRunningBuild, this.previousSuccessfulBuild, this.buildstateEnum);
-		
-	}
-	
-	@Override
 	public void loadSlackNotificationProjectSettingsFromConfigXml(File xmlConfigFile) throws IOException, JDOMException{
-		projSettings.readFrom(ConfigLoaderUtil.getFullConfigElement(xmlConfigFile).getChild("slackNotifications"));
-	}
-	
-	@Override
-	public SlackNotificationConfig getSlackNotificationConfig() {
-		return slackNotificationConfig;
+		projSettings.readFrom(ConfigLoaderUtil.getFullConfigElement(xmlConfigFile).getChild("rocketNotifications"));
 	}
 
 	@Override
@@ -139,18 +117,8 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 	}
 
 	@Override
-	public RocketNotificationPayloadManager getSlackNotificationPayloadManager() {
-		return manager;
-	}
-
-	@Override
 	public SBuildType getSBuildType() {
 		return sBuildType;
-	}
-
-	@Override
-	public SBuildType getSBuildTypeFromSubProject() {
-		return sBuildType03;
 	}
 
 }

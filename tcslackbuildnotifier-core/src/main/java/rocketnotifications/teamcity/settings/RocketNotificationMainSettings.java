@@ -4,7 +4,6 @@ import jetbrains.buildServer.serverSide.MainConfigProcessor;
 import jetbrains.buildServer.serverSide.SBuildServer;
 import jetbrains.buildServer.serverSide.ServerPaths;
 import org.jdom.Element;
-import rocketnotifications.SlackNotificationProxyConfig;
 import rocketnotifications.teamcity.Loggers;
 
 import java.io.IOException;
@@ -72,10 +71,6 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
 
     public void setSlackNotificationMainConfig(RocketNotificationMainConfig slackNotificationMainConfig) {
         this.slackNotificationMainConfig = slackNotificationMainConfig;
-    }
-
-    public String getProxy(){
-    	return this.slackNotificationMainConfig.getProxyConfig().getProxyHost();
     }
 
     public String getInfoText(){
@@ -159,10 +154,6 @@ public class RocketNotificationMainSettings implements MainConfigProcessor {
 	public void dispose() {
 		Loggers.SERVER.debug(NAME + ":dispose() called");
 	}
-
-	public SlackNotificationProxyConfig getProxyConfig() {
-		return this.slackNotificationMainConfig.getProxyConfig();	}
-
 
     public int getMaxCommitsToDisplay() {
         return this.slackNotificationMainConfig.getContent().getMaxCommitsToDisplay();

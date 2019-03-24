@@ -22,7 +22,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
 	private Boolean updateSuccess = false;
 	private String updateMessage = "";
 	private CopyOnWriteArrayList<SlackNotificationConfig> slackNotificationsConfigs;
-	
+
 	public RocketNotificationProjectSettings(){
 		slackNotificationsConfigs = new CopyOnWriteArrayList<SlackNotificationConfig>();
 	}
@@ -36,12 +36,12 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
     {
     	Loggers.SERVER.debug("readFrom :: " + rootElement.toString());
     	CopyOnWriteArrayList<SlackNotificationConfig> configs = new CopyOnWriteArrayList<SlackNotificationConfig>();
-    	
+
     	if (rootElement.getAttribute(ENABLED) != null){
     		this.slackNotificationsEnabled = Boolean.parseBoolean(rootElement.getAttributeValue(ENABLED));
     	}
-    	
-		List<Element> namedChildren = rootElement.getChildren("slackNotification");
+
+		List<Element> namedChildren = rootElement.getChildren("rocketNotification");
         if(namedChildren.isEmpty())
         {
             this.slackNotificationsConfigs = null;
@@ -61,7 +61,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
 	@Override
     public void writeTo(Element parentElement)
     /* Is passed an (probably empty) Element by TC, which is expected to be populated from the settings
-     * in memory. 
+     * in memory.
      */
     {
     	Loggers.SERVER.debug(NAME + ":writeTo :: " + parentElement.toString());
@@ -77,11 +77,11 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
             }
         }
     }
-    
+
     public List<SlackNotificationConfig> getSlackNotificationsAsList(){
     	return this.slackNotificationsConfigs;
-    }    
-    
+    }
+
     public List<SlackNotificationConfig> getProjectSlackNotificationsAsList(){
     	List<SlackNotificationConfig> projHooks = new ArrayList<SlackNotificationConfig>();
     	for (SlackNotificationConfig config : getSlackNotificationsAsList()){
@@ -90,8 +90,8 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
     		}
     	}
     	return projHooks;
-    }    
-    
+    }
+
     public List<SlackNotificationConfig> getBuildSlackNotificationsAsList(SBuildType buildType){
     	List<SlackNotificationConfig> buildHooks = new ArrayList<SlackNotificationConfig>();
     	for (SlackNotificationConfig config : getSlackNotificationsAsList()){
@@ -100,9 +100,9 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
     		}
     	}
     	return buildHooks;
-    }    
-        
-	
+    }
+
+
     public String getSlackNotificationsAsString(){
     	String tmpString = "";
     	for(SlackNotificationConfig whConf : slackNotificationsConfigs)
@@ -129,7 +129,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
             	this.updateSuccess = true;
             	this.slackNotificationsConfigs.removeAll(tempSlackNotificationList);
             }
-        }    	
+        }
     }
 
 	public void updateSlackNotification(String ProjectId, String token, String slackNotificationId, String channel, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled, SlackNotificationContentConfig content) {
@@ -162,7 +162,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
                    	this.updateSuccess = true;
                 }
             }
-        }    			
+        }
 	}
 
 	public void addNewSlackNotification(String ProjectId, String token, String channel, String teamName, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildTypeSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled) {
@@ -183,7 +183,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
 	public Integer getSlackNotificationsCount(){
 		return this.slackNotificationsConfigs.size();
 	}
-	
+
 	public Boolean isEnabled() {
 		return slackNotificationsEnabled;
 	}
@@ -194,7 +194,7 @@ public class RocketNotificationProjectSettings implements ProjectSettings {
 		}
 		return "";
 	}
-	
+
 	public List<SlackNotificationConfig> getSlackNotificationsConfigs() {
 		return slackNotificationsConfigs;
 	}

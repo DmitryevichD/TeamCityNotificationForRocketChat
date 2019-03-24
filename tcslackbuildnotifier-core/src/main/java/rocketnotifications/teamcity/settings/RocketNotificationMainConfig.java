@@ -8,7 +8,6 @@ import jetbrains.buildServer.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import rocketnotifications.SlackNotificationProxyConfig;
 import rocketnotifications.teamcity.Loggers;
 
 import java.io.File;
@@ -423,41 +422,7 @@ public class RocketNotificationMainConfig implements ChangeListener {
             {
                 content.setShowFailureReason(Boolean.parseBoolean(slackNotificationsElement.getAttributeValue(SHOW_FAILURE_REASON)));
             }
-
-            Element proxyElement = slackNotificationsElement.getChild(PROXY);
-            if(proxyElement != null)
-            {
-                if (proxyElement.getAttribute("proxyShortNames") != null){
-                    setProxyShortNames(Boolean.parseBoolean(proxyElement.getAttributeValue("proxyShortNames")));
-                }
-
-                if (proxyElement.getAttribute("host") != null){
-                    setProxyHost(proxyElement.getAttributeValue("host"));
-                }
-
-                if (proxyElement.getAttribute("port") != null){
-                    setProxyPort(Integer.parseInt(proxyElement.getAttributeValue("port")));
-                }
-
-                if (proxyElement.getAttribute(USERNAME) != null){
-                    setProxyUsername(proxyElement.getAttributeValue(USERNAME));
-                }
-
-                if (proxyElement.getAttribute(PASSWORD) != null){
-                    setProxyPassword(proxyElement.getAttributeValue(PASSWORD));
-                }
-            }
-            else {
-                setProxyHost(null);
-                setProxyPort(null);
-                setProxyUsername(null);
-                setProxyPassword(null);
-            }
         }
-    }
-
-    public SlackNotificationProxyConfig getProxyConfig() {
-        return new SlackNotificationProxyConfig(proxyHost, proxyPort, proxyUsername, proxyPassword);
     }
 
     public SlackNotificationContentConfig getContent() {

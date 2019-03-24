@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <slackNotifications enabled="true">
-    <slackNotification enabled="true" channel="http://something" statemask="255">
+  <rocketNotifications enabled="true">
+    <rocketNotification enabled="true" channel="http://something" statemask="255">
       <parameters>
 	    <param name="foo" value="bar" />
       </parameters>
-    </slackNotification>
+    </rocketNotification>
     <slackNotification enabled="true" channel="http://localhost.local.network/slacknotifications/test/test">
       <parameters>
 	    <param name="fromTeamCity" value="%system.test.1%" />
       </parameters>
     </slackNotification>
     <slackNotification enabled="false" channel="http://localhost.local.network/slacknotifications/test/teamcity" />
-  </slackNotifications>
+  </rocketNotifications>
 </settings>

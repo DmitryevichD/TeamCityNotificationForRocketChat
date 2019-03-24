@@ -9,7 +9,6 @@ import org.jdom.input.SAXBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import rocketnotifications.SlackNotificationProxyConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,64 +41,6 @@ public class SlackNotificationMainSettingsTest {
 
         File outputDir = new File("slack");
         outputDir.delete();
-    }
-
-    @Test
-	public void TestFullConfig(){
-        String expectedConfigDirectory = ".";
-        ServerPaths serverPaths = mock(ServerPaths.class);
-        when(serverPaths.getConfigDir()).thenReturn(expectedConfigDirectory);
-
-		RocketNotificationMainSettings whms = new RocketNotificationMainSettings(server, serverPaths);
-		whms.register();
-		whms.readFrom(getFullConfigElement());
-		String proxy = whms.getProxy();
-		SlackNotificationProxyConfig whpc = whms.getProxyConfig();
-		assertTrue(proxy.equals(this.proxyHost));
-		assertTrue(whpc.getProxyHost().equals(this.proxyHost ));
-		assertTrue(whpc.getProxyPort().equals(this.proxyPort));
-        assertTrue(whms.getDefaultChannel().equals(this.defaultChannel));
-        assertTrue(whms.getTeamName().equals(this.teamName));
-        assertTrue(whms.getToken().equals(this.token));
-        assertTrue(whms.getIconUrl().equals(this.iconUrl));
-        assertTrue(whms.getBotName().equals(this.botName));
-        assertTrue(whms.getShowBuildAgent());
-        assertTrue(whms.getShowElapsedBuildTime());
-        assertFalse(whms.getShowCommits());
-        assertEquals(15, whms.getMaxCommitsToDisplay());
-        assertTrue(whms.getShowFailureReason());
-
-        Credentials credentials = whpc.getCreds();
-        
-		assertEquals("some-username", credentials.getUserPrincipal().getName());
-		assertEquals("some-password", credentials.getPassword());
-	}
-
-    @Test
-    public void TestEmptyDefaultsConfig(){
-        String expectedConfigDirectory = ".";
-        ServerPaths serverPaths = mock(ServerPaths.class);
-        when(serverPaths.getConfigDir()).thenReturn(expectedConfigDirectory);
-
-        RocketNotificationMainSettings whms = new RocketNotificationMainSettings(server, serverPaths);
-        whms.register();
-        whms.readFrom(getEmptyDefaultsConfigElement());
-        String proxy = whms.getProxy();
-        SlackNotificationProxyConfig whpc = whms.getProxyConfig();
-        assertTrue(proxy.equals(this.proxyHost));
-        assertTrue(whpc.getProxyHost().equals(this.proxyHost ));
-        assertTrue(whpc.getProxyPort().equals(this.proxyPort));
-        assertTrue(whms.getDefaultChannel().equals(this.defaultChannel));
-        assertTrue(whms.getTeamName().equals(this.teamName));
-        assertTrue(whms.getToken().equals(this.token));
-        assertTrue(whms.getIconUrl().equals(this.iconUrl));
-        assertTrue(whms.getBotName().equals(this.botName));
-        assertNull(whms.getShowBuildAgent());
-        assertNull(whms.getShowElapsedBuildTime());
-        assertTrue(whms.getShowCommits());
-        assertEquals(5, whms.getMaxCommitsToDisplay());
-        assertNull(whms.getShowFailureReason());
-
     }
 
     private Element getFullConfigElement(){

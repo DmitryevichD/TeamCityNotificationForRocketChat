@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <slackNotifications enabled="true">
-    <slackNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
+  <rocketNotifications enabled="true">
+    <rocketNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
       <states>
         <state type="buildStarted" enabled="false" />
         <state type="beforeBuildFinish" enabled="false" />
@@ -13,7 +13,7 @@
         <state type="buildFailed" enabled="false" />
         <state type="responsibilityChanged" enabled="false" />
       </states>
-    </slackNotification>
-  </slackNotifications>
+    </rocketNotification>
+  </rocketNotifications>
 </settings>
 

@@ -11,18 +11,15 @@ import java.io.IOException;
 import java.util.List;
 
 public interface SlackNotification {
-
-	public abstract void setProxy(SlackNotificationProxyConfig proxyConfig);
-
-	public abstract void setProxy(String proxyHost, Integer proxyPort, Credentials credentials);
+//	public abstract void setProxy(String proxyHost, Integer proxyPort, Credentials credentials);
 
 	public abstract void post() throws FileNotFoundException, IOException;
 
 	public abstract Integer getStatus();
 
-	public abstract String getProxyHost();
+//	public abstract String getProxyHost();
 
-	public abstract int getProxyPort();
+//	public abstract int getProxyPort();
 
 	public abstract String getChannel();
 
@@ -84,14 +81,14 @@ public interface SlackNotification {
 
 	//public abstract Integer getEventListBitMask();
 	//public abstract void setTriggerStateBitMask(Integer triggerStateBitMask);
-
-	public abstract String getProxyUsername();
-
-	public abstract void setProxyUsername(String proxyUsername);
-
-	public abstract String getProxyPassword();
-
-	public abstract void setProxyPassword(String proxyPassword);
+//
+//	public abstract String getProxyUsername();
+//
+//	public abstract void setProxyUsername(String proxyUsername);
+//
+//	public abstract String getProxyPassword();
+//
+//	public abstract void setProxyPassword(String proxyPassword);
 
 	public abstract SlackNotificationPayloadContent getPayload();
 

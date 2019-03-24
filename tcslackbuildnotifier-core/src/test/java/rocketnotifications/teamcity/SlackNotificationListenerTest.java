@@ -1,6 +1,5 @@
 package rocketnotifications.teamcity;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -39,8 +38,6 @@ import rocketnotifications.teamcity.payload.content.PostMessageResponse;
 import rocketnotifications.teamcity.settings.RocketNotificationMainSettings;
 import rocketnotifications.teamcity.settings.RocketNotificationProjectSettings;
 
-import rocketnotifications.teamcity.settings.SlackNotificationConfig;
-
 public class SlackNotificationListenerTest {
 	SBuildServer sBuildServer = mock(SBuildServer.class);
 	BuildHistory buildHistory = mock(BuildHistory.class);
@@ -61,7 +58,7 @@ public class SlackNotificationListenerTest {
 	MockSBuildType sBuildType = new MockSBuildType("Test Build", "A Test Build", "bt1");
 	MockSRunningBuild sRunningBuild = new MockSRunningBuild(sBuildType, "SubVersion", Status.NORMAL, "Running", "TestBuild01");
 	MockSProject sProject = new MockSProject("Test Project", "A test project", "project1", "ATestProject", sBuildType);
-	RocketNotificationListener whl;
+	RocketNotificationListener rocketNotificationListener;
 
 
     @After
@@ -69,7 +66,7 @@ public class SlackNotificationListenerTest {
     public void deleteSlackConfigFile(){
         DeleteConfigFiles();
     }
-    
+
     private void DeleteConfigFiles() {
         File outputFile = new File("slack", "slack-config.xml");
         outputFile.delete();
@@ -77,7 +74,7 @@ public class SlackNotificationListenerTest {
         File outputDir = new File("slack");
         outputDir.delete();
     }
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -98,7 +95,7 @@ public class SlackNotificationListenerTest {
         when(httpClient.execute(isA(HttpUriRequest.class))).thenReturn(response);
 		slackNotificationImpl = new SlackNotificationImpl(httpClient, "");
 		spySlackNotification = spy(slackNotificationImpl);
-		whl = new RocketNotificationListener(sBuildServer, settings, configSettings, manager, factory);
+		rocketNotificationListener = new RocketNotificationListener(sBuildServer, settings, configSettings, manager, factory);
 		projSettings = new RocketNotificationProjectSettings();
 		when(factory.getSlackNotification()).thenReturn(spySlackNotification);
 		//when(manager.isRegisteredFormat("JSON")).thenReturn(true);
@@ -116,7 +113,7 @@ public class SlackNotificationListenerTest {
 		finishedFailedBuilds.add(previousFailedBuild);
 		sBuildType.setProject(sProject);
 		when(settings.getSettings(sRunningBuild.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME)).thenReturn(projSettings);
-		whl.register();
+		rocketNotificationListener.register();
 	}
 
 	@After
@@ -134,23 +131,8 @@ public class SlackNotificationListenerTest {
 		RocketNotificationListener whl = new RocketNotificationListener(sBuildServer, settings,configSettings, manager, factory);
 		whl.register();
 		verify(sBuildServer).addListener(whl);
-	}	@Test
-	public void testGetFromConfig() {
-        String expectedConfigDirectory = ".";
-        ServerPaths serverPaths = mock(ServerPaths.class);
-        when(serverPaths.getConfigDir()).thenReturn(expectedConfigDirectory);
-	    BuildState buildState = new BuildState();
-	    RocketNotificationMainSettings mainSettings = new RocketNotificationMainSettings(sBuildServer, serverPaths);
-	    mainSettings.readFrom(getFullConfigElement());
-	    SlackNotificationConfig config = new SlackNotificationConfig("", "#general", "teamName", true, buildState, true, true, null, true, true, true, true);
-	    RocketNotificationListener whl = new RocketNotificationListener(sBuildServer, settings, mainSettings, manager, factory);
-	    
-	    whl.getFromConfig(slackNotificationImpl, config);
-	    
-		assertEquals("myproxy.mycompany.com", slackNotificationImpl.getProxyHost());
-		assertEquals(8080, slackNotificationImpl.getProxyPort());
 	}
-	
+
 	private Element getFullConfigElement(){
         return getElement("src/test/resources/main-config-full.xml");
     }
@@ -177,8 +159,8 @@ public class SlackNotificationListenerTest {
 		projSettings.addNewSlackNotification("", "project1", "my-channel", "myteam", true, state, true, true, new HashSet<String>(), true, true, true, true);
 		when(slacknotification.isEnabled()).thenReturn(state.allEnabled());
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedSuccessfulBuilds);
-		
-		whl.buildStarted(sRunningBuild);
+
+		rocketNotificationListener.buildStarted(sRunningBuild);
 		verify(factory.getSlackNotification(), times(1)).post();
 	}
 
@@ -188,11 +170,11 @@ public class SlackNotificationListenerTest {
 		projSettings.addNewSlackNotification("", "1234", "my-channel", "myteam", true, state , true, true, new HashSet<String>(), true, true, true, true);
 		when(slacknotification.isEnabled()).thenReturn(state.allEnabled());
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedSuccessfulBuilds);
-		
-		whl.buildFinished(sRunningBuild);
+
+		rocketNotificationListener.buildFinished(sRunningBuild);
 		verify(factory.getSlackNotification(), times(1)).post();
 	}
-	
+
 	@Test
 	public void testBuildFinishedSRunningBuildSuccessAfterFailure() throws FileNotFoundException, IOException {
 		BuildState state = new BuildState();
@@ -202,11 +184,11 @@ public class SlackNotificationListenerTest {
 		projSettings.addNewSlackNotification("", "1234", "my-channel", "myteam", true, state, true, true, new HashSet<String>(), true, true, true, true);
 		when(slacknotification.isEnabled()).thenReturn(state.enabled(BuildStateEnum.BUILD_FIXED));
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedFailedBuilds);
-		
-		whl.buildFinished(sRunningBuild);
+
+		rocketNotificationListener.buildFinished(sRunningBuild);
 		verify(factory.getSlackNotification(), times(1)).post();
 	}
-	
+
 	@Test
 	public void testBuildFinishedSRunningBuildSuccessAfterSuccess() throws FileNotFoundException, IOException {
 		BuildState state = new BuildState();
@@ -214,8 +196,8 @@ public class SlackNotificationListenerTest {
 		projSettings.addNewSlackNotification("", "1234", "my-channel", "myteam", true, state, true, true, new HashSet<String>(), true, true, true, true);
 		when(slacknotification.isEnabled()).thenReturn(state.enabled(BuildStateEnum.BUILD_FIXED));
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedSuccessfulBuilds);
-		
-		whl.buildFinished(sRunningBuild);
+
+		rocketNotificationListener.buildFinished(sRunningBuild);
 		verify(factory.getSlackNotification(), times(0)).post();
 	}
 
@@ -224,8 +206,8 @@ public class SlackNotificationListenerTest {
 		BuildState state = new BuildState().setAllEnabled();
 		projSettings.addNewSlackNotification("", "1234", "my-channel", "myteam", true, state, true, true, new HashSet<String>(), true, true, true, true);
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedSuccessfulBuilds);
-		
-		whl.buildInterrupted(sRunningBuild);
+
+		rocketNotificationListener.buildInterrupted(sRunningBuild);
 		verify(factory.getSlackNotification(), times(1)).post();
 	}
 
@@ -235,8 +217,8 @@ public class SlackNotificationListenerTest {
 		state.enable(BuildStateEnum.BEFORE_BUILD_FINISHED);
 		projSettings.addNewSlackNotification("", "1234", "my-channel", "myteam", true, state, true, true, new HashSet<String>(), true, true, true, true);
 		when(buildHistory.getEntriesBefore(sRunningBuild, false)).thenReturn(finishedSuccessfulBuilds);
-		
-		whl.beforeBuildFinish(sRunningBuild);
+
+		rocketNotificationListener.beforeBuildFinish(sRunningBuild);
 		verify(factory.getSlackNotification(), times(1)).post();
 	}
 
@@ -246,9 +228,9 @@ public class SlackNotificationListenerTest {
 		sBuildType.setProject(sProject);
 		String triggeredBy = "SubVersion";
 		MockSRunningBuild sRunningBuild = new MockSRunningBuild(sBuildType, triggeredBy, Status.NORMAL, "Running", "TestBuild01");
-		
+
 		when(settings.getSettings(sRunningBuild.getProjectId(), ROCKET_NOTIFICATIONS_SETTINGS_ATTRIBUTE_NAME)).thenReturn(projSettings);
-		
+
 		MockSProject sProject = new MockSProject("Test Project", "A test project", "project1", "ATestProject", sBuildType);
 		sBuildType.setProject(sProject);
 		RocketNotificationListener whl = new RocketNotificationListener(sBuildServer, settings,configSettings, manager, factory);
@@ -261,7 +243,7 @@ public class SlackNotificationListenerTest {
 
 //	@Test
 //	public void testResponsibleChangedSBuildTypeResponsibilityInfoResponsibilityInfoBoolean() {
-//		
+//
 //	}
 
 }

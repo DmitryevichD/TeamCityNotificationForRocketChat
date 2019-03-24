@@ -74,7 +74,6 @@ public class RocketNotificationListener extends BuildServerAdapter {
         slackNotification.setBotName(myMainSettings.getBotName());
 		slackNotification.setEnabled(myMainSettings.getEnabled() && slackNotificationConfig.getEnabled());
 		slackNotification.setBuildStates(slackNotificationConfig.getBuildStates());
-		slackNotification.setProxy(myMainSettings.getProxyConfig());
         slackNotification.setShowBuildAgent(myMainSettings.getShowBuildAgent());
         slackNotification.setShowElapsedBuildTime(myMainSettings.getShowElapsedBuildTime());
         slackNotification.setShowCommits(myMainSettings.getShowCommits());
@@ -99,8 +98,7 @@ public class RocketNotificationListener extends BuildServerAdapter {
             slackNotification.setShowTriggeredBy(slackNotificationConfig.getContent().getShowTriggeredBy());
             slackNotification.setShowFailureReason(slackNotificationConfig.getContent().getShowFailureReason() == null ? SlackNotificationContentConfig.DEFAULT_SHOW_FAILURE_REASON : slackNotificationConfig.getContent().getShowFailureReason());
         }
-		Loggers.ACTIVITIES.debug("SlackNotificationListener :: RocketNotification proxy set to "
-				+ slackNotification.getProxyHost() + " for " + slackNotificationConfig.getChannel());
+		Loggers.ACTIVITIES.debug("SlackNotificationListener :: RocketNotification proxy set to for " + slackNotificationConfig.getChannel());
 	}
 
 	private void processBuildEvent(SRunningBuild sRunningBuild, BuildStateEnum state) {

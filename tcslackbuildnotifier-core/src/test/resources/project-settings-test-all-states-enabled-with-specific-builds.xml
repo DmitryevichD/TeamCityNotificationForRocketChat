@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <slackNotifications enabled="true">
-    <slackNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
+  <rocketNotifications enabled="true">
+    <rocketNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
       <states>
         <state type="buildStarted" enabled="true" />
         <state type="beforeBuildFinish" enabled="true" />
@@ -17,7 +17,7 @@
       	<build-type id="bt1"/>
       	<build-type id="bt2"/>
       </build-types>
-      
+
        <parameters>
 	    <param name="color" value="red" />
 	    <param name="notify" value="1" />
@@ -25,7 +25,7 @@
       <custom-templates>
       	<custom-template type="buildStatusHtml" template="&lt;a href=&quot;http://${branch}/&quot;&gt;Test test test project id is : ${projectId}&lt;/a&gt;" enabled="true"/>
       </custom-templates>
-    </slackNotification>
-  </slackNotifications>
+    </rocketNotification>
+  </rocketNotifications>
 </settings>
 

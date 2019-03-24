@@ -12,7 +12,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertTrue;
 
 public class ConfigLoaderUtil {
-	
+
 	public static Element getFullConfigElement(File file) throws JDOMException, IOException{
 		SAXBuilder builder = new SAXBuilder();
 		builder.setIgnoringElementContentWhitespace(true);
@@ -23,7 +23,7 @@ public class ConfigLoaderUtil {
 	public static SlackNotificationConfig getFirstSlackNotificationInConfig(File f) throws JDOMException, IOException{
 		Element fileAsElement = ConfigLoaderUtil.getFullConfigElement(f);
 		assertTrue("One and only one slackNotifications expected when loading test config from file : " + f.getName(), fileAsElement.getChild("rocketNotifications").getChildren("rocketNotification").size() == 1);
-		return new SlackNotificationConfig((Element) fileAsElement.getChild("rocketNotifications").getChildren("slackNotification").get(0));
+		return new SlackNotificationConfig((Element) fileAsElement.getChild("rocketNotifications").getChildren("rocketNotification").get(0));
 	}
-	
+
 }

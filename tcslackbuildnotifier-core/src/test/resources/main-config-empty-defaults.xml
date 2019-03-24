@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server>
-  <slacknotifications
+  <rocketNotifications
           defaultChannel="#my-channel"
           teamName="myteam"
           token="thisismytoken"
@@ -8,5 +8,5 @@
           botname="Team City">
     <!--<proxy host="myproxy.mycompany.com" port="8080"/>-->
     <info url="http://intranet.mycompany.com/docs/UsingSlackNotifications" text="Using SlackNotifications in myCompany Inc." />
-  </slacknotifications>
+  </rocketNotifications>
 </server>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <slackNotifications enabled="true">
-    <slackNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
+  <rocketNotifications enabled="true">
+    <rocketNotification token="hook.slack.com" channel="http://localhost/test" enabled="true" format="nvpairs">
       <states>
         <state type="buildStarted" enabled="true" />
       </states>
@@ -14,7 +14,7 @@
                  showTriggeredBy="true"
                  maxCommitsToDisplay="20"
                 showFailureReason="true"/>
-    </slackNotification>
-  </slackNotifications>
+    </rocketNotification>
+  </rocketNotifications>
 </settings>
 
